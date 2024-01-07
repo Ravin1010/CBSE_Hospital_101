@@ -36,36 +36,48 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>Hospital 101!</h1>
-        <h2>Welcome, Admin <span th:text="${user.name}"></span>. Here are the patient records. You can choose to approve their status to inactive.</h2>
+        <h1>Pharmacy Inventory</h1>
+        <h2>Manage the inventory of medicines</h2>
         <div><br></div>
         <div><br></div>
-        <h3>Patient Records</h3>
+        <h3>Medicine List</h3>
         <div>
+            <a th:href="@{/pharmacy/add-medicine}" class="btn btn-primary btn-sm mb-3">
+                Add New Medicine</a>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>patient disease id</th>
-                        <th>patient id</th>
-                        <th>doctor name</th>
-                        <th>disease name</th>
-                        <th>status</th>
-                        <th>request status</th>
-                        <th>created at</th>
-                        <th>action</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Cost</th>
+                        <th>Amount</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Iterate over patientDiseases list -->
-                    <tr th:each="patientDisease : ${patientDiseases}">
-                        <td th:text="${patientDisease.pdId}"></td>
-                        <td th:text="${patientDisease.userId}"></td>
-                        <td th:text="${patientDisease.doctorName}"></td>
-                        <td th:text="${patientDisease.diseaseName}"></td>
-                        <td th:text="${patientDisease.status}"></td>
-                        <td th:text="${patientDisease.requestStatus}"></td>
-                        <td th:text="${patientDisease.createdAt}"></td>
-                        <td><button class="btn btn-primary" th:onclick="'requestButtonClick(' + ${patientDisease.pdId} + ')'">Approve</button></td>
+                    <tr th:each="tempMedicine : ${medicineList}">
+                        <td th:text="${tempMedicine.medicineId}"></td>
+                        <td th:text="${tempMedicine.medicineName}"></td>
+                        <td th:text="${tempMedicine.medicineDetails}"></td>
+                        <td th:text="${tempMedicine.medicineCost}"></td>
+                        <td th:text="${tempMedicine.medicineAmount}"></td>
+                        <td>
+                            <!-- Add "update" button/link -->
+                            <a th:href="@{/pharmacy/showFormForUpdate(medicineId=${tempMedicine.medicineId})}"
+                               class="btn btn-info btn-sm">
+                                Update
+                            </a>
+        
+                            <!-- Add "delete" button/link -->
+                            <a th:href="@{/pharmacy/delete(medicineId=${tempMedicine.medicineId})}"
+                               class="btn btn-danger btn-sm"
+                               onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                                Delete
+                            </a>
+        
+                        </td>
                     </tr>
                 </tbody>              
             </table>
@@ -75,24 +87,3 @@
 </div>
 </body>
 </html>
-
-<script th:inline="javascript">
-    function requestButtonClick(pdId) {
-        
-        // Make an AJAX request to update the request status
-        $.ajax({
-            type: 'POST',
-            url: '/update-patient-record-status',
-            data: { pdId: pdId },
-            success: function(response) {
-                // Handle success, update the UI or perform additional actions
-                alert('Request status updated successfully');
-                location.reload(); 
-            },
-            error: function(error) {
-                // Handle error
-                console.error('Error updating request status', error);
-            }
-        });
-    }
-</script>
