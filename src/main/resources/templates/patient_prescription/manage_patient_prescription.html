@@ -1,0 +1,115 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">Hospital 101</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/manage-patient-record-user}">Manage Patient Record</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/patient-prescription/manage-patient-prescription}">Get Medicine</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br /><br />
+<body>
+<div class="container">
+    <div class="row">
+        <h1>Patient Prescription</h1>
+        <h3>View your Medicine Prescriptions</h3>
+        <div><br></div>
+        <div>
+            <h4>New Prescriptions</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Treatment</th>
+                        <th>Medicine</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iterate over patientDiseases list -->
+                    <tr th:each="acceptedPrescription : ${acceptedPrescriptionList}">
+                        <td th:text="${acceptedPrescription.prescriptionName}"></td>
+                        <td th:text="${acceptedPrescription.tpName}"></td>
+                        <td th:text="${acceptedPrescription.medicineId}"></td>
+                        <td th:text="${acceptedPrescription.medicineQuantity}"></td>
+                        <td><button class="btn btn-primary" th:onclick="'collectButtonClick(' + ${acceptedPrescription.prescriptionId} + ')'">Collect</button></td>
+                        <!-- <td>
+                            <a th:href="@{/patient-prescription/collect(prescriptionId=${acceptedPrescription.prescriptionId})}"
+                               class="btn btn-success btn-sm"
+                               onclick="if (!(confirm('Are you sure you want to collect this prescription?'))) return false">
+                                Collect
+                            </a>
+                        </td> -->
+                    </tr>
+                </tbody>              
+            </table>
+            <h4>Prescription History</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Treatment</th>
+                            <th>Medicine</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Iterate over patientDiseases list -->
+                        <tr th:each="collectedPrescription : ${collectedPrescriptionList}">
+                            <td th:text="${collectedPrescription.prescriptionName}"></td>
+                            <td th:text="${collectedPrescription.tpName}"></td>
+                            <td th:text="${collectedPrescription.medicineId}"></td>
+                            <td th:text="${collectedPrescription.medicineQuantity}"></td>
+                        </tr>
+                    </tbody>              
+                </table>
+        </div>
+        <div><br></div>
+    </div>
+</div>
+</body>
+</html>
+
+<script th:inline="javascript">
+    function collectButtonClick(prescriptionId) {
+        
+        // Make an AJAX request to update the request status
+        $.ajax({
+            type: 'POST',
+            url: '/patient-prescription/collect',
+            data: { prescriptionId: prescriptionId },
+            success: function(response) {
+                // Handle success, update the UI or perform additional actions
+                alert(response);
+                location.reload(); 
+            },
+            error: function(error) {
+                // Handle error
+                console.error('Error updating request status', error);
+            }
+        });
+    }
+</script>
