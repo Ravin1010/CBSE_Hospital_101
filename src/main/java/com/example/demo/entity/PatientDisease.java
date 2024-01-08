@@ -29,6 +29,9 @@ public class PatientDisease {
     @CreationTimestamp // this adds the default timestamp on save
     private Timestamp created_at;
 
+    private String docName;
+    private String patientName;
+    private String diseaseName;
     public PatientDisease() {
     }
 
@@ -97,6 +100,29 @@ public class PatientDisease {
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
+    }
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getDiseaseName() {
+        return diseaseName;
+    }
+
+    public void setDiseaseName(String diseaseName) {
+        this.diseaseName = diseaseName;
     }
 
 }
