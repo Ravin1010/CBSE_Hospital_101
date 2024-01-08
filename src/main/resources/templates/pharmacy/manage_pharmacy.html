@@ -38,15 +38,15 @@
             <tbody>
               <!-- Iterate over patientDiseases list -->
               <tr th:each="tempMedicine : ${medicineList}">
-                <td th:text="${tempMedicine.medicineId}"></td>
-                <td th:text="${tempMedicine.medicineName}"></td>
-                <td th:text="${tempMedicine.medicineDetails}"></td>
-                <td th:text="${tempMedicine.medicineCost}"></td>
-                <td th:text="${tempMedicine.medicineAmount}"></td>
+                <td th:text="${tempMedicine.id}"></td>
+                <td th:text="${tempMedicine.name}"></td>
+                <td th:text="${tempMedicine.details}"></td>
+                <td th:text="${tempMedicine.cost}"></td>
+                <td th:text="${tempMedicine.stock}"></td>
                 <td>
                   <!-- Add "update" button/link -->
                   <a
-                    th:href="@{/pharmacy/showFormForUpdate(medicineId=${tempMedicine.medicineId})}"
+                    th:href="@{/pharmacy/showFormForUpdate(id=${tempMedicine.id})}"
                     class="btn btn-info btn-sm"
                   >
                     Update
@@ -54,7 +54,7 @@
 
                   <!-- Add "delete" button/link -->
                   <a
-                    th:href="@{/pharmacy/delete(medicineId=${tempMedicine.medicineId})}"
+                    th:href="@{/pharmacy/delete(id=${tempMedicine.id})}"
                     class="btn btn-danger btn-sm"
                     onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false"
                   >

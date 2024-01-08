@@ -8,6 +8,5 @@ import com.example.demo.entity.Medicine;
 
 @Repository
 public interface MedicineRepository extends JpaRepository<Medicine, Integer> {
-    List<Medicine> findByMedicineId(int medicineId);
-    List<Medicine> findByMedicineName(String medicineName);
+    List<Medicine> findByName(String name);
 }

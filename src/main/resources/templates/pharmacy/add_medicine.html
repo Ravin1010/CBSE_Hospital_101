@@ -23,18 +23,18 @@
                       th:object="${medicine}" method="POST">
     
                     <!-- Add hidden form field to handle update -->
-                    <input type="hidden" th:field="*{medicineId}" />
+                    <input type="hidden" th:field="*{id}" />
     
-                    <input type="text" th:field="*{medicineName}"
+                    <input type="text" th:field="*{name}"
                            class="form-control mb-4 col-10" placeholder="Name">
     
-                    <input type="text" th:field="*{medicineDetails}"
+                    <input type="text" th:field="*{details}"
                            class="form-control mb-4 col-10" placeholder="Details">
     
-                    <input type="number" th:field="*{medicineCost}"
+                    <input type="number" th:field="*{cost}"
                            class="form-control mb-4 col-10" placeholder="Cost" step="0.01">
     
-                    <input type="number" th:field="*{medicineAmount}"
+                    <input type="number" th:field="*{stock}"
                            class="form-control mb-4 col-10" placeholder="Amount">
     
     

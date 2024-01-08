@@ -59,12 +59,12 @@ public class MedicineService
         {
             newMedicine = medicine.get();
         }
-        int medicineAmount = newMedicine.getMedicineAmount();
+        int medicineAmount = newMedicine.getStock();
         
         if (medicineAmount - collectAmount <0){
             return false;
         }else{
-            newMedicine.setMedicineAmount(medicineAmount- collectAmount);
+            newMedicine.setStock(medicineAmount- collectAmount);
             medicineRepository.save(newMedicine);
             return true;
         }

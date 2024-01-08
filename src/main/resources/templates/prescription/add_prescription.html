@@ -41,7 +41,7 @@
     
                     <select th:field="*{medicineId}"
                            class="form-control mb-4 col-10" placeholder="Select Medicine">
-                       <option th:each="tempMedicine : ${medicineList}" th:value="${tempMedicine.medicineId}" th:text="${tempMedicine.medicineName}"></option>
+                       <option th:each="tempMedicine : ${medicineList}" th:value="${tempMedicine.id}" th:text="${tempMedicine.name}"></option>
 
                     <input type="number" th:field="*{medicineQuantity}"
                            class="form-control mb-4 col-10" placeholder="Amount">
