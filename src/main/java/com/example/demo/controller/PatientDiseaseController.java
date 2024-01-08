@@ -35,7 +35,7 @@ public class PatientDiseaseController {
         User user = (User) session.getAttribute("user");
 
         // Retrieve patient disease data based on user ID
-        List<PatientDisease> patientDiseases = patientDiseaseRepository.findByUserId(user.getUser_id());
+        List<PatientDisease> patientDiseases = patientDiseaseRepository.findByPatientID(user.getUser_id());
 
         model.addAttribute("patientDiseases", patientDiseases);
 
@@ -48,9 +48,9 @@ public class PatientDiseaseController {
 
     @PostMapping("/update-request-status")
     @ResponseBody
-    public String updateRequestStatus(@RequestParam int pdId) {
+    public String updateRequestStatus(@RequestParam int id) {
         // Find the patient disease record by ID
-        Optional<PatientDisease> optionalPatientDisease = patientDiseaseRepository.findById(pdId);
+        Optional<PatientDisease> optionalPatientDisease = patientDiseaseRepository.findById(id);
 
         if (optionalPatientDisease.isPresent()) {
             PatientDisease patientDisease = optionalPatientDisease.get();
@@ -85,9 +85,9 @@ public class PatientDiseaseController {
 
     @PostMapping("/update-patient-record-status")
     @ResponseBody
-    public String updatePatientRecordStatus(@RequestParam int pdId) {
+    public String updatePatientRecordStatus(@RequestParam int id) {
         // Find the patient disease record by ID
-        Optional<PatientDisease> optionalPatientDisease = patientDiseaseRepository.findById(pdId);
+        Optional<PatientDisease> optionalPatientDisease = patientDiseaseRepository.findById(id);
 
         if (optionalPatientDisease.isPresent()) {
             PatientDisease patientDisease = optionalPatientDisease.get();

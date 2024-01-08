@@ -42,27 +42,27 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>patient disease id</th>
-                        <th>patient id</th>
-                        <th>doctor name</th>
-                        <th>disease name</th>
-                        <th>status</th>
-                        <th>request status</th>
-                        <th>created at</th>
-                        <th>action</th>
+                        <th>id</th>
+                <th>patient id</th>
+                <th>disease id</th>
+                <th>doctor id</th>
+                <th>status</th>
+                <th>request status</th>
+                <th>created at</th>
+                <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Iterate over patientDiseases list -->
                     <tr th:each="patientDisease : ${patientDiseases}">
-                        <td th:text="${patientDisease.pdId}"></td>
-                        <td th:text="${patientDisease.userId}"></td>
-                        <td th:text="${patientDisease.doctorName}"></td>
-                        <td th:text="${patientDisease.diseaseName}"></td>
-                        <td th:text="${patientDisease.status}"></td>
-                        <td th:text="${patientDisease.requestStatus}"></td>
-                        <td th:text="${patientDisease.createdAt}"></td>
-                        <td><button class="btn btn-primary" th:onclick="'requestButtonClick(' + ${patientDisease.pdId} + ')'">Request</button></td>
+                        <td th:text="${patientDisease.id}"></td>
+                <td th:text="${patientDisease.patientID}"></td>
+                <td th:text="${patientDisease.diseaseID}"></td>
+                <td th:text="${patientDisease.doctorID}"></td>
+                <td th:text="${patientDisease.status}"></td>
+                <td th:text="${patientDisease.requestStatus}"></td>
+                <td th:text="${patientDisease.created_at}"></td>
+                        <td><button class="btn btn-primary" th:onclick="'requestButtonClick(' + ${patientDisease.id} + ')'">Request</button></td>
                     </tr>
                 </tbody>              
             </table>
@@ -74,13 +74,13 @@
 </html>
 
 <script th:inline="javascript">
-    function requestButtonClick(pdId) {
+    function requestButtonClick(id) {
         
         // Make an AJAX request to update the request status
         $.ajax({
             type: 'POST',
             url: '/patient-disease/update-request-status',
-            data: { pdId: pdId },
+            data: { id: id },
             success: function(response) {
                 // Handle success, update the UI or perform additional actions
                 alert('Request status updated successfully');
