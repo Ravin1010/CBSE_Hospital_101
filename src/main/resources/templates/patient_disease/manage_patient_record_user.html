@@ -79,7 +79,7 @@
         // Make an AJAX request to update the request status
         $.ajax({
             type: 'POST',
-            url: '/update-request-status',
+            url: '/patient-disease/update-request-status',
             data: { pdId: pdId },
             success: function(response) {
                 // Handle success, update the UI or perform additional actions

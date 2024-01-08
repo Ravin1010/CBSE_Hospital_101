@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,8 @@ import com.example.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
-@RequestMapping("/patient_disease")
+@Controller
+@RequestMapping("/patient-disease")
 public class PatientDiseaseController {
 
     @Autowired
@@ -41,7 +43,7 @@ public class PatientDiseaseController {
         model.addAttribute("user", user);
 
         // Other logic for the manage patient record page
-        return "manage_patient_record_user";
+        return "patient_disease/manage_patient_record_user";
     }
 
     @PostMapping("/update-request-status")
@@ -78,7 +80,7 @@ public class PatientDiseaseController {
         model.addAttribute("patientDiseases", patientDiseases);
 
         // Other logic for the manage patient record page
-        return "manage_patient_record_admin";
+        return "patient_disease/manage_patient_record_admin";
     }
 
     @PostMapping("/update-patient-record-status")
