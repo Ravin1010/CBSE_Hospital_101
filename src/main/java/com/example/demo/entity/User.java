@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,11 +12,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "age")
     private int age;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "role")
     private String role;
+
+    // @OneToMany(mappedBy = "user")
+    // private List<Appointment> appointments;
 
     public User() {
     }
@@ -75,4 +85,12 @@ public class User {
         this.role = role;
     }
 
+    // public List<Appointment> getAppointments()
+    // {
+    //     return appointments;
+    // }
+
+    // public void setAppointments(List<Appointment> appointments) {
+    //     this.appointments = appointments;
+    // }
 }

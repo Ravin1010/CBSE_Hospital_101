@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
 
@@ -10,75 +13,70 @@ public class PatientDisease {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pd_id")
-    private int pdId;
-
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "user_id")
-    private int userId;
-
-    @Column(name = "doctor_name")
-    private String doctorName;
-
-    @Column(name = "disease_name")
-    private String diseaseName;
-
+    private Integer userId;
+    @Column(name = "disease_id")
+    private Integer diseaseID;
+    @Column(name = "doctor_id")
+    private Integer doctorID;
     @Column(name = "status")
     private String status;
-
     @Column(name = "request_status")
     private String requestStatus;
-
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @CreationTimestamp // this adds the default timestamp on save
+    private Timestamp created_at;
 
     public PatientDisease() {
     }
 
-    public PatientDisease(int pdId, int userId, String doctorName, String diseaseName, String status,
-            String requestStatus, LocalDateTime createdAt) {
-        this.pdId = pdId;
+    public PatientDisease(Integer id, Integer userId, Integer diseaseID, Integer doctorID, String status,
+            String requestStatus, Timestamp created_at) {
+        this.id = id;
         this.userId = userId;
-        this.doctorName = doctorName;
-        this.diseaseName = diseaseName;
+        this.diseaseID = diseaseID;
+        this.doctorID = doctorID;
         this.status = status;
         this.requestStatus = requestStatus;
-        this.createdAt = createdAt;
+        this.created_at = created_at;
     }
 
-    public int getPdId() {
-        return this.pdId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPdId(int pdId) {
-        this.pdId = pdId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getUserId() {
-        return this.userId;
+    public Integer getPatientID() {
+        return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setPatientID(Integer userId) {
         this.userId = userId;
     }
 
-    public String getDoctorName() {
-        return this.doctorName;
+    public Integer getDiseaseID() {
+        return diseaseID;
     }
 
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
+    public void setDiseaseID(Integer diseaseID) {
+        this.diseaseID = diseaseID;
     }
 
-    public String getDiseaseName() {
-        return this.diseaseName;
+    public Integer getDoctorID() {
+        return doctorID;
     }
 
-    public void setDiseaseName(String diseaseName) {
-        this.diseaseName = diseaseName;
+    public void setDoctorID(Integer doctorID) {
+        this.doctorID = doctorID;
     }
 
     public String getStatus() {
-        return this.status;
+        return status;
     }
 
     public void setStatus(String status) {
@@ -86,19 +84,19 @@ public class PatientDisease {
     }
 
     public String getRequestStatus() {
-        return this.requestStatus;
+        return requestStatus;
     }
 
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
+    public Timestamp getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
 }

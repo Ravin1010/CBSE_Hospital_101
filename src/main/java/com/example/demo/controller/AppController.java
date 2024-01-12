@@ -14,8 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.example.demo.entity.Appointment;
 import com.example.demo.entity.PatientDisease;
 import com.example.demo.entity.User;
+import com.example.demo.repository.AppointmentRepository;
 import com.example.demo.repository.PatientDiseaseRepository;
 import com.example.demo.repository.UserRepository;
 
@@ -30,6 +32,7 @@ public class AppController {
 
     @Autowired
     private PatientDiseaseRepository patientDiseaseRepository;
+
 
     @GetMapping("")
     public String viewHomePage() {
@@ -217,5 +220,9 @@ public class AppController {
             return "Error: Patient Disease record not found";
         }
     }
+
+
+
+
 
 }
