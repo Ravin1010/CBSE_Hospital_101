@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.springRest.Controller;
+package com.example.demo.controller;
 
-import com.springRest.Throwable.PatientDiseaseAdminNotFoundException;
-import com.springRest.enitity.Disease;
-import com.springRest.enitity.Doctor;
-import com.springRest.enitity.Patient;
-import com.springRest.enitity.PatientDiseaseAdmin;
-import com.springRest.service.DiseaseService;
-import com.springRest.service.DoctorService;
-import com.springRest.service.PatientDiseaseAdminService;
-import com.springRest.service.PatientService;
+import com.example.demo.Throwable.PatientDiseaseAdminNotFoundException;
+import com.example.demo.entity.Disease;
+import com.example.demo.entity.Doctor;
+import com.example.demo.entity.Patient;
+import com.example.demo.entity.PatientDiseaseAdmin;
+import com.example.demo.service.DiseaseService;
+import com.example.demo.service.DoctorService;
+import com.example.demo.service.PatientDiseaseAdminService;
+import com.example.demo.service.PatientService;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
