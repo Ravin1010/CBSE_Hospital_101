@@ -1,12 +1,12 @@
-package com.springRest.service;
+package com.example.demo.service;
 
 import com.springRest.DAO.DiseaseRepository;
 import com.springRest.DAO.PatientRepository;
 import com.springRest.DAO.TreatmentPlanRepository;
-import com.springRest.Throwable.DiseaseNotFoundException;
-import com.springRest.enitity.Disease;
-import com.springRest.enitity.Patient;
-import com.springRest.enitity.TreatmentPlan;
+import com.example.demo.Throwable.DiseaseNotFoundException;
+import com.example.demo.entity.Disease;
+import com.example.demo.entity.Patient;
+import com.example.demo.entity.TreatmentPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

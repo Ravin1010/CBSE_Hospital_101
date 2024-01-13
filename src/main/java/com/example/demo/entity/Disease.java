@@ -1,4 +1,4 @@
-package com.springRest.enitity;
+package com.example.demo.entity;
 
 
 //Committed in git.

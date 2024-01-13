@@ -1,13 +1,13 @@
-package com.springRest.Controller;
+package com.example.demo.controller;
 
-import com.springRest.Throwable.DiseaseNotFoundException;
-import com.springRest.enitity.Disease;
-import com.springRest.enitity.Doctor;
-import com.springRest.enitity.TreatmentPlan;
-import com.springRest.service.DiseaseService;
-import com.springRest.service.DoctorService;
-import com.springRest.service.PatientService;
-import com.springRest.service.TreatmentPlanService;
+import com.example.demo.Throwable.DiseaseNotFoundException;
+import com.example.demo.entity.Disease;
+import com.example.demo.entity.Doctor;
+import com.example.demo.entity.TreatmentPlan;
+import com.example.demo.service.DiseaseService;
+import com.example.demo.service.DoctorService;
+import com.example.demo.service.PatientService;
+import com.example.demo.service.TreatmentPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
