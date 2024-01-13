@@ -1,6 +1,7 @@
 package com.springRest.Controller;
 
 import com.springRest.Throwable.DiseaseNotFoundException;
+import com.springRest.Throwable.PatientDiseaseAdminNotFoundException;
 import com.springRest.enitity.Disease;
 import com.springRest.enitity.Doctor;
 import com.springRest.enitity.TreatmentPlan;
@@ -82,23 +83,15 @@ public class DiseaseController {
         }
     }
 
-    @Autowired
-    @PersistenceContext
-    private EntityManager em;
-
     @GetMapping("/delete")
-    @Transactional
-    public String deleteDoctor(@RequestParam("diseaseId") int theID, RedirectAttributes ra) {
+    public String deleteDoctor(@RequestParam("diseaseId") int id, RedirectAttributes ra) {
 
-        Disease a = em.find(Disease.class, theID);
-        for (Doctor b : a.getDoctors()) {
-            if (b.getDisease() != null) {
-                em.remove(a);
-                ra.addFlashAttribute("message", "The disease ID " + theID + " has been deleted");
-            }
+        try {
+            diseaseService.deleteById(id);
+            ra.addFlashAttribute("message", "The PD ID " + id + " has been deleted");
+        } catch (DiseaseNotFoundException ex) {
+            ra.addFlashAttribute("message", "This PD ID " + id + " not found");
         }
-        em.remove(a);
-        //diseaseService.deleteById(theID);
         return "redirect:/diseases/list";
     }
 }
