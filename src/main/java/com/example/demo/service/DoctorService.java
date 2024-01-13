@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.repository.DoctorRepository;
 import com.example.demo.entity.Doctor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +14,7 @@ public class DoctorService
 {
     private DoctorRepository doctorRepository;
 
+    @Autowired
     public DoctorService(DoctorRepository doctorRepository)
     {
         this.doctorRepository = doctorRepository;
@@ -31,10 +34,10 @@ public class DoctorService
     public Doctor findById(int id)
     {
         Doctor newDoctor =null;
-        Optional<Doctor> doctor = doctorRepository.findById(id);
-        if(doctor.isPresent())
+        Optional<Doctor> patient = doctorRepository.findById(id);
+        if(patient.isPresent())
         {
-            newDoctor = doctor.get();
+            newDoctor = patient.get();
         }
         return newDoctor;
     }

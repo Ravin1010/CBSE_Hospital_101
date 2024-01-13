@@ -1,9 +1,12 @@
 package com.example.demo.entity;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
-import java.util.Date;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -13,7 +16,7 @@ public class Doctor
 {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name="id")
     private int id;
     @Column(name="doctor_name")
     private String name;
@@ -28,20 +31,29 @@ public class Doctor
     @Column(name="date_of_birth")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
+    @Column(name="specialization")
+    private String specialization;
+    // @ManyToOne
+    // @JoinColumn(name = "role_id")
+    // private Role role;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments;
 
     public Doctor()
     {
 
     }
 
-    public Doctor(String name, String fatherName, String gender, String cnic, String email, Date dateOfBirth)
+    public Doctor(String name, String fatherName, String gender, String CNIC, String email, Date dateOfBirth, String specialization)
     {
         this.name = name;
         this.fatherName = fatherName;
         this.gender = gender;
-        this.cnic = cnic;
+        this.cnic = CNIC;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.specialization = specialization;
     }
 
     public int getId()
@@ -114,6 +126,17 @@ public class Doctor
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getSpecialization()
+    {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization)
+    {
+        this.specialization = specialization;
+    }
+
+
     @Override
     public String toString()
     {
@@ -125,5 +148,9 @@ public class Doctor
                 ", CNIC='" + cnic + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public Collection<Appointment> getAppointments() {
+        return null;
     }
 }

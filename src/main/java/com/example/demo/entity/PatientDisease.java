@@ -15,8 +15,8 @@ public class PatientDisease {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "patient_id")
-    private Integer patientID;
+    @Column(name = "user_id")
+    private Integer userId;
     @Column(name = "disease_id")
     private Integer diseaseID;
     @Column(name = "doctor_id")
@@ -35,10 +35,10 @@ public class PatientDisease {
     public PatientDisease() {
     }
 
-    public PatientDisease(Integer id, Integer patientID, Integer diseaseID, Integer doctorID, String status,
+    public PatientDisease(Integer id, Integer userId, Integer diseaseID, Integer doctorID, String status,
             String requestStatus, Timestamp created_at) {
         this.id = id;
-        this.patientID = patientID;
+        this.userId = userId;
         this.diseaseID = diseaseID;
         this.doctorID = doctorID;
         this.status = status;
@@ -55,11 +55,11 @@ public class PatientDisease {
     }
 
     public Integer getPatientID() {
-        return patientID;
+        return userId;
     }
 
-    public void setPatientID(Integer patientID) {
-        this.patientID = patientID;
+    public void setPatientID(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getDiseaseID() {
@@ -100,29 +100,6 @@ public class PatientDisease {
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
-    }
-    public String getDocName() {
-        return docName;
-    }
-
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
-    }
-
-    public String getDiseaseName() {
-        return diseaseName;
-    }
-
-    public void setDiseaseName(String diseaseName) {
-        this.diseaseName = diseaseName;
     }
 
 }
