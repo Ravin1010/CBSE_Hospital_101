@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<body>
+
+<div th:replace="fragments/nav-bar/nav-bar :: nav"></div>
+
+
+<div class="form-row">
+    <div class="form-group col-md-3"></div>
+    <div class="form-group col-md-6">
+
+        <div class="container">
+
+            <h3>Doctor Directory</h3>
+            <br>
+
+            <p class="h4 mb-10">Save doctor</p>
+
+            <form action="#" th:action="@{/doctors/save}"
+                  th:object="${doctor}" method="POST">
+
+                <!-- Add hidden form field to handle update -->
+                <input type="hidden" th:field="*{id}" />
+
+                <input type="text" th:field="*{name}"
+                       class="form-control mb-4 col-10" placeholder="doctor name">
+
+                <input type="text" th:field="*{fatherName}"
+                       class="form-control mb-4 col-10" placeholder="Father name">
+
+                <select th:field="*{gender}"
+                        class="form-control mb-4 col-10" placeholder="Gender">
+                    <option th:value="'Male'" th:text="Male"></option>
+                    <option th:value="'Female'" th:text="Female"></option>
+                </select>
+                <input type="text" th:field="*{cnic}"
+                       class="form-control mb-4 col-10" placeholder="CNIC">
+
+                <input type="date" th:field="${doctor.dateOfBirth}"
+                       class="form-control mb-4 col-10" placeholder="Date Of Birth">
+
+                <input type="text" th:field="*{email}"
+                       class="form-control mb-4 col-10" placeholder="Email Address">
+
+
+                <select th:field="*{disease}"
+                        class="form-control mb-4 col-10" placeholder="Select Doctor">
+                    <option th:each = "tempDisease : ${diseaseList}" th:value="${tempDisease.id}" th:text="${tempDisease.diseaseName} + ' spacialist'"></option>
+
+                </select>
+
+                <button type="submit" class="btn btn-info col-4">Save</button>
+
+            </form>
+
+            <br>
+            <a th:href="@{/doctors/list}">Back to Doctors List</a>
+
+        </div>
+
+
+    </div>
+    <div class="form-group col-md-3"></div>
+</div>
+
+
+
+
+<div th:replace="fragments/Footer/Footer :: footer"></div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
