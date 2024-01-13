@@ -29,6 +29,9 @@ public class PatientDisease {
     @CreationTimestamp // this adds the default timestamp on save
     private Timestamp created_at;
 
+    private String docName;
+    private String patientName;
+    private String diseaseName;
     public PatientDisease() {
     }
 

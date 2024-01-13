@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Doctor;
 import com.example.demo.service.DoctorService;
+import com.example.demo.service.DiseaseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,13 @@ public class DoctorController
 
     // load employee data
     private DoctorService doctorService;
+    private DiseaseService diseaseService;
     private List<Doctor> theDoctors;
 
-    public DoctorController(DoctorService doctorService)
+    public DoctorController(DoctorService doctorService, DiseaseService diseaseService)
     {
         this.doctorService = doctorService;
+        this.diseaseService = diseaseService;
     }
 
     @GetMapping("/list")
@@ -36,6 +39,7 @@ public class DoctorController
     public String getDoctorForm(Model model)
     {
         Doctor Doctor = new Doctor();
+        model.addAttribute("diseaseList",diseaseService.getAllDiseases());
         model.addAttribute("doctor",Doctor);
         return "doctors/addDoctor";
     }
@@ -52,6 +56,7 @@ public class DoctorController
     public String showUpdateForm(@RequestParam("doctorId") int theID,Model model)
     {
         Doctor doctor = doctorService.findById(theID);
+        model.addAttribute("diseaseList",diseaseService.getAllDiseases());
         model.addAttribute("doctor",doctor);
         return "doctors/addDoctor";
     }
@@ -63,6 +68,7 @@ public class DoctorController
         return "redirect:/doctors/list";
     }
 }
+
 
 
 

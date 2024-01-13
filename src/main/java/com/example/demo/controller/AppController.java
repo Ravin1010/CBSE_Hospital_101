@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,6 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/")
 public class AppController {
 
     @Autowired
@@ -36,14 +38,14 @@ public class AppController {
 
     @GetMapping("")
     public String viewHomePage() {
-        return "index";
+        return "app/index";
     }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
 
-        return "signup_form";
+        return "app/signup_form";
     }
 
     @PostMapping("/process_register")
@@ -55,22 +57,17 @@ public class AppController {
         // add logic to check if email is unique, if not return error
         if (userRepo.findByEmail(user.getEmail()) != null) {
             model.addAttribute("error", "Email is already in use");
-            return "signup_form"; // Return to the registration form with an error message
+            return "app/signup_form"; // Return to the registration form with an error message
         } else {
             userRepo.save(user);
         }
 
-        return "register_success";
-    }
-
-    @GetMapping("/home")
-    public String greeting() {
-        return "home";
+        return "app/register_success";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "app/login";
     }
 
     @PostMapping("/login")
@@ -98,7 +95,7 @@ public class AppController {
         } else {
             // Failed login
             model.addAttribute("error", "Invalid username or password");
-            return "login";
+            return "app/login";
         }
     }
 
@@ -110,7 +107,7 @@ public class AppController {
             session.invalidate();
         }
         // Add a flash attribute for the logout message
-        redirectAttributes.addFlashAttribute("logout", true);
+        redirectAttributes.addFlashAttribute("app/logout", true);
 
         // Redirect to the login page or any other page
         return "redirect:/login";
@@ -124,7 +121,7 @@ public class AppController {
         if (user != null) {
             // Pass user information to the model
             model.addAttribute("name", user.getName()); // Adjust this according to your User entity
-            return "user_dashboard";
+            return "app/user_dashboard";
         } else {
             // Handle the case when user credentials are not available
             return "redirect:/login";
@@ -139,7 +136,7 @@ public class AppController {
         if (user != null) {
             // Pass user information to the model
             model.addAttribute("name", user.getName()); // Adjust this according to your User entity
-            return "admin_dashboard";
+            return "app/admin_dashboard";
         } else {
             // Handle the case when user credentials are not available
             return "redirect:/login";
