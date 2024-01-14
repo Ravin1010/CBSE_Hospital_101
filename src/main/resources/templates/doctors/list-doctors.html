@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <body>
+    <div th:replace="navbar/admin_navbar :: nav"></div>
+    <div class="container">
+      <h3>doctor Directory</h3>
+      <hr />
+      <a th:href="@{/doctors/addDoctor}" class="btn btn-primary btn-sm mb-3">
+        Add New doctor</a
+      >
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>doctor Name</th>
+            <th>Father Name</th>
+            <th>Gender</th>
+            <th>CNIC</th>
+            <th>Date Of Birth</th>
+            <th>Specialization</th>
+            <th>Action</th>
+            <!-- <th>Specialization Action</th> -->
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="tempdoctor : ${doctors}">
+            <td>
+              <a th:href="@{'availability/list-available'}">
+                <span th:text="${tempdoctor.name}" />
+              </a>
+            </td>
+            <td th:text="${tempdoctor.fatherName}" />
+            <td th:text="${tempdoctor.gender}" />
+            <td th:text="${tempdoctor.cnic}" />
+            <td th:text="${tempdoctor.dateOfBirth}" />
+
+            <td th:text="${tempdoctor.specialization}"></td>
+
+            <td>
+              <a
+                th:href="@{/doctors/showFormForUpdate(doctorId=${tempdoctor.id})}"
+                class="btn btn-info btn-sm"
+                >Update</a
+              >
+              <a
+                th:href="@{/doctors/delete(doctorId=${tempdoctor.id})}"
+                class="btn btn-danger btn-sm"
+                onclick="if (!(confirm('Are you sure you want to delete this Doctor?'))) return false"
+              >
+                Delete</a
+              >
+            </td>
+            <!-- <td>
+              <a
+                th:href="@{/doctors/addSpacialization(doctorId=${tempdoctor.id})}"
+                class="btn btn-info btn-sm"
+              >
+                Add More Specialization</a
+              >
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

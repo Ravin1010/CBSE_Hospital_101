@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="/Footer/css/Article-List.css" />
+    <link rel="stylesheet" href="/Footer/css/Footer-Dark.css" />
+    <link rel="stylesheet" href="/Footer/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css" />
+    <link
+      rel="stylesheet"
+      href="/nav-bar/css/Registration-Form-with-Photo.css"
+    />
+    <link rel="stylesheet" href="/nav-bar/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css" />
+    <title>Disease Module</title>
+  </head>
+
+  <body>
+    <div th:replace="navbar/admin_navbar :: nav"></div>
+    <div class="container">
+      <div class="text-center">
+        <h2>[[${pageTitle}]]</h2>
+        <div class="m-4"></div>
+        <h2><a href="/diseases/list">Manage Diseases</a></h2>
+        <h2><a href="/patientDiseases/list">Manage Patients' Disease</a></h2>
+        <h2><a href="/treatment_plans/list">Manage Treatment plans</a></h2>
+      </div>
+      <div class="m-4"></div>
+    </div>
+  </body>
+</html>

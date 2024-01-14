@@ -72,7 +72,7 @@ public class MedicineController
     }
 
     @GetMapping("/showFormForUpdate")
-    public String showUpdateForm(@RequestParam("medicineId") int theID,Model model)
+    public String showUpdateForm(@RequestParam("id") int theID,Model model)
     {
         Medicine medicine = medicineService.findById(theID);
         model.addAttribute("medicine",medicine);
@@ -80,7 +80,7 @@ public class MedicineController
     }
 
     @GetMapping("/delete")
-    public String deleteMedicine(@RequestParam("medicineId") int theID, Model model, HttpSession session)
+    public String deleteMedicine(@RequestParam("id") int theID, Model model, HttpSession session)
     {
          // Retrieve user details from the session
         User user = (User) session.getAttribute("user");

@@ -1,92 +1,72 @@
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
     <title>Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand">Hospital 101</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/manage-patient-record-admin}">Manage Patient Record</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/pharmacy/manage-pharmacy}">Manage Pharmacy Inventory</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/prescription/manage-prescription}">Manage Prescription</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/view-payments}">View Payment Report</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<br /><br />
-<body>
-<div class="container">
-    <div class="row">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <body>
+    <div th:replace="navbar/admin_navbar :: nav"></div>
+    <div class="container">
+      <div class="row">
         <h1>Pharmacy Inventory</h1>
         <h2>Manage the inventory of medicines</h2>
-        <div><br></div>
-        <div><br></div>
+        <div><br /></div>
+        <div><br /></div>
         <h3>Medicine List</h3>
         <div>
-            <a th:href="@{/pharmacy/add-medicine}" class="btn btn-primary btn-sm mb-3">
-                Add New Medicine</a>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Details</th>
-                        <th>Cost</th>
-                        <th>Amount</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Iterate over patientDiseases list -->
-                    <tr th:each="tempMedicine : ${medicineList}">
-                        <td th:text="${tempMedicine.medicineId}"></td>
-                        <td th:text="${tempMedicine.medicineName}"></td>
-                        <td th:text="${tempMedicine.medicineDetails}"></td>
-                        <td th:text="${tempMedicine.medicineCost}"></td>
-                        <td th:text="${tempMedicine.medicineAmount}"></td>
-                        <td>
-                            <!-- Add "update" button/link -->
-                            <a th:href="@{/pharmacy/showFormForUpdate(medicineId=${tempMedicine.medicineId})}"
-                               class="btn btn-info btn-sm">
-                                Update
-                            </a>
-        
-                            <!-- Add "delete" button/link -->
-                            <a th:href="@{/pharmacy/delete(medicineId=${tempMedicine.medicineId})}"
-                               class="btn btn-danger btn-sm"
-                               onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
-                                Delete
-                            </a>
-        
-                        </td>
-                    </tr>
-                </tbody>              
-            </table>
+          <a
+            th:href="@{/pharmacy/add-medicine}"
+            class="btn btn-primary btn-sm mb-3"
+          >
+            Add New Medicine</a
+          >
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Details</th>
+                <th>Cost</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Iterate over patientDiseases list -->
+              <tr th:each="tempMedicine : ${medicineList}">
+                <td th:text="${tempMedicine.id}"></td>
+                <td th:text="${tempMedicine.name}"></td>
+                <td th:text="${tempMedicine.details}"></td>
+                <td th:text="${tempMedicine.cost}"></td>
+                <td th:text="${tempMedicine.stock}"></td>
+                <td>
+                  <!-- Add "update" button/link -->
+                  <a
+                    th:href="@{/pharmacy/showFormForUpdate(id=${tempMedicine.id})}"
+                    class="btn btn-info btn-sm"
+                  >
+                    Update
+                  </a>
+
+                  <!-- Add "delete" button/link -->
+                  <a
+                    th:href="@{/pharmacy/delete(id=${tempMedicine.id})}"
+                    class="btn btn-danger btn-sm"
+                    onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false"
+                  >
+                    Delete
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div><br></div>
+        <div><br /></div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>

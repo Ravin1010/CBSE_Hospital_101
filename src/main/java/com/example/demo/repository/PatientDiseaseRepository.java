@@ -9,7 +9,7 @@ import com.example.demo.entity.PatientDisease;
 
 @Repository
 public interface PatientDiseaseRepository extends JpaRepository<PatientDisease, Integer> {
-    List<PatientDisease> findByUserId(int userId);
+    List<PatientDisease> findByUserId(Integer userId);
 
     List<PatientDisease> findByStatus(String status);
 

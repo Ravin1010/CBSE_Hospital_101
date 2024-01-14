@@ -7,70 +7,71 @@ public class Medicine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "medicine_id")
-    private int medicineId;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "medicine_name")
-    private String medicineName;
+    private String name;
 
     @Column(name = "medicine_details")
-    private String medicineDetails;
+    private String details;
 
     @Column(name = "medicine_cost")
-    private float medicineCost;
+    private float cost;
 
-    @Column(name = "medicine_amount")
-    private int medicineAmount;
+    @Column(name = "medicine_stock")
+    private int stock;
 
     public Medicine() {
     }
 
-    public Medicine(int medicineId, String medicineName, String medicineDetails, float medicineCost, int medicineAmount) {
-        this.medicineId = medicineId;
-        this.medicineName = medicineName;
-        this.medicineDetails = medicineDetails;
-        this.medicineCost = medicineCost;
-        this.medicineAmount = medicineAmount;
+    public Medicine(int id, String name, String details, float cost, int stock) {
+        this.id = id;
+        this.name = name;
+        this.details = details;
+        this.cost = cost;
+        this.stock = stock;
     }
 
-    public int getMedicineId() {
-        return medicineId;
+    public int getId() {
+        return id;
     }
 
-    public void setMedicineId(int medicineId) {
-        this.medicineId = medicineId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMedicineName() {
-        return medicineName;
+    public String getName() {
+        return name;
     }
 
-    public void setMedicineName(String medicineName) {
-        this.medicineName = medicineName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMedicineDetails() {
-        return medicineDetails;
+    public String getDetails() {
+        return details;
     }
 
-    public void setMedicineDetails(String medicineDetails) {
-        this.medicineDetails = medicineDetails;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
-    public float getMedicineCost() {
-        return medicineCost;
+    public float getCost() {
+        return cost;
     }
 
-    public void setMedicineCost(float medicineCost) {
-        this.medicineCost = medicineCost;
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 
-    public int getMedicineAmount() {
-        return medicineAmount;
+    public int getStock() {
+        return stock;
     }
 
-    public void setMedicineAmount(int medicineAmount) {
-        this.medicineAmount = medicineAmount;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
+    
 }

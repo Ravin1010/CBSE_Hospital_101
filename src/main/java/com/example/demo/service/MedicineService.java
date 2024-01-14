@@ -9,81 +9,66 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MedicineService
-{
+public class MedicineService {
     private MedicineRepository medicineRepository;
 
-    public MedicineService()
-    {
+    public MedicineService() {
     }
 
     @Autowired
-    public MedicineService(MedicineRepository medicineRepository)
-    {
+    public MedicineService(MedicineRepository medicineRepository) {
         this.medicineRepository = medicineRepository;
     }
 
-    public List<Medicine> getAllMedicines()
-    {
+    public List<Medicine> getAllMedicines() {
         List<Medicine> medicineList = medicineRepository.findAll();
         return medicineList;
     }
 
-    public void save(Medicine medicine)
-    {
+    public void save(Medicine medicine) {
         medicineRepository.save(medicine);
     }
 
-    public Medicine findById(int id)
-    {
-        Medicine newMedicine =null;
+    public Medicine findById(int id) {
+        Medicine newMedicine = null;
         Optional<Medicine> medicine = medicineRepository.findById(id);
-        if(medicine.isPresent())
-        {
+        if (medicine.isPresent()) {
             newMedicine = medicine.get();
         }
         return newMedicine;
     }
 
-
-    public void deleteById(int id)
-    {
+    public void deleteById(int id) {
         medicineRepository.deleteById(id);
     }
 
-    public boolean collectMedicine(int id, int collectAmount)
-    {
-        Medicine newMedicine =null;
+    public boolean collectMedicine(int id, int collectAmount) {
+        Medicine newMedicine = null;
         Optional<Medicine> medicine = medicineRepository.findById(id);
-        if(medicine.isPresent())
-        {
+        if (medicine.isPresent()) {
             newMedicine = medicine.get();
         }
-        int medicineAmount = newMedicine.getMedicineAmount();
-        
-        if (medicineAmount - collectAmount <0){
+        int medicineAmount = newMedicine.getStock();
+
+        if (medicineAmount - collectAmount < 0) {
             return false;
-        }else{
-            newMedicine.setMedicineAmount(medicineAmount- collectAmount);
+        } else {
+            newMedicine.setStock(medicineAmount - collectAmount);
             medicineRepository.save(newMedicine);
             return true;
         }
     }
 
-
     public float getMedicineCostById(int medicineId) {
         Medicine medicine = medicineRepository.findById(medicineId).orElseThrow(
-                () -> new RuntimeException("Medicine not found")
-        );
-        return medicine.getMedicineCost();
+                () -> new RuntimeException("Medicine not found"));
+        return medicine.getCost();
     }
 
     public String getMedicineNameById(int medicineId) {
         Medicine medicine = medicineRepository.findById(medicineId).orElseThrow(
-                () -> new RuntimeException("Medicine not found")
-        );
-        return medicine.getMedicineName();
+                () -> new RuntimeException("Medicine not found"));
+        return medicine.getName();
     }
-
 
 }
