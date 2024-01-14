@@ -33,7 +33,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AppointmentController {
-    
+
     @Autowired
     private final AppointmentService appointmentService;
     @Autowired
@@ -61,70 +61,85 @@ public class AppointmentController {
         // Pass user information to the model
         model.addAttribute("user", user);
 
-        return "appointment-history";}
+        return "appointment-history";
+    }
 
-    // //Get appointment history of a patient based on ID    
+    // //Get appointment history of a patient based on ID
     // @GetMapping("/appointment-history")
     // public String showAppointments(Model model, HttpSession session) {
-    //     User user = (User) session.getAttribute("user");
+    // User user = (User) session.getAttribute("user");
 
-    //     int userId = user.getUser_id();
-    //     List<Appointment> appointmentHistory = appointmentService.getAppointmentHistoryByUserId(userId);
-    //     model.addAttribute("appointmentHistory", appointmentHistory);
-    //     model.addAttribute("user", user);
+    // int userId = user.getUser_id();
+    // List<Appointment> appointmentHistory =
+    // appointmentService.getAppointmentHistoryByUserId(userId);
+    // model.addAttribute("appointmentHistory", appointmentHistory);
+    // model.addAttribute("user", user);
 
-    //     return "appointment-history";
+    // return "appointment-history";
     // }
 
-    // //Get appointment history of all patient    
+    // //Get appointment history of all patient
     // @GetMapping("/appointment-history")
     // public String showAppointments(Model model) {
-    //     List<Appointment> appointments = appointmentService.getAllAppointments();
-    //     model.addAttribute("appointments", appointments);
+    // List<Appointment> appointments = appointmentService.getAllAppointments();
+    // model.addAttribute("appointments", appointments);
 
-    //     return "appointment-history";
+    // return "appointment-history";
     // }
 
     @GetMapping("/book-appointment")
-    public String showBookAppointmentForm(Model model) {
-        // Add logic to populate necessary data for the form (e.g., doctors, available slots)
+    public String showBookAppointmentForm(Model model, HttpSession session) {
+        // Retrieve user details from the session
+        User user = (User) session.getAttribute("user");
+
+        // Add logic to populate necessary data for the form (e.g., doctors, available
+        // slots)
         List<Doctor> doctors = doctorService.getAllDoctors();
         model.addAttribute("doctors", doctors);
 
         // Create an empty Appointment object for the form submission
         model.addAttribute("newAppointment", new Appointment());
 
+        // Pass user information to the model
+        model.addAttribute("user", user);
+
         return "book-appointment";
     }
 
-
     @PostMapping("/book-appointment")
-    public String bookAppointment(@ModelAttribute("newAppointment") Appointment newAppointment) {
+    public String bookAppointment(@ModelAttribute("newAppointment") Appointment newAppointment, HttpSession session) {
+        // Retrieve user details from the session
+        User user = (User) session.getAttribute("user");
+        // Set the userId for the newAppointment
+        newAppointment.setUserId(user.getUser_id());
         // Add logic to save the new appointment to the database
         appointmentService.bookAppointment(newAppointment);
 
         // Redirect to the appointments page or show a success message
         return "redirect:/appointment-history";
     }
-    // @PostMapping("/bookAppointment") 
-	// @CrossOrigin
-	// public ResponseEntity<Appointment> bookAppointment(@RequestParam String key, @RequestBody Appointment appointment, HttpSession session) throws LoginException,  IOException{
-	// 	// if(appointment == null) {
-	// 	// 	throw new AppointmentException("Please enter valid appointment");
-	// 	// }
-		
-	// 	if(loginService.checkUserLoginOrNot(key)) {
-	// 		User user = (User) session.getAttribute("user");
+    // @PostMapping("/bookAppointment")
+    // @CrossOrigin
+    // public ResponseEntity<Appointment> bookAppointment(@RequestParam String key,
+    // @RequestBody Appointment appointment, HttpSession session) throws
+    // LoginException, IOException{
+    // // if(appointment == null) {
+    // // throw new AppointmentException("Please enter valid appointment");
+    // // }
 
-	// 		Appointment bookAppointment = patientService.bookAppointment(key, appointment);
-			
-	// 		return new ResponseEntity<Appointment>(bookAppointment, HttpStatus.CREATED);
-			
-	// 	}else {
-			
-	// 		throw new LoginException("Invalid key or please login first");
-			
-	// 	}
+    // if(loginService.checkUserLoginOrNot(key)) {
+    // User user = (User) session.getAttribute("user");
+
+    // Appointment bookAppointment = patientService.bookAppointment(key,
+    // appointment);
+
+    // return new ResponseEntity<Appointment>(bookAppointment, HttpStatus.CREATED);
+
+    // }else {
+
+    // throw new LoginException("Invalid key or please login first");
+
+    // }
     // }
 
     @GetMapping("/pending-appointments")
@@ -135,16 +150,20 @@ public class AppointmentController {
     }
 
     // @GetMapping("/assign-doctor-form")
-    // public String showAssignDoctorForm(@RequestParam int appointmentId, Model model) {
-    //    // List<Appointment> unassignedAppointments = appointmentService.getUnassignedAppointments();
-    //    // List<Doctor> availableDoctors = doctorRepository.findAll();
-    //   // List<Doctor> availableDoctors = appointmentService.getAvailableDoctorsAtSlot(appointmentId);
-    //  //   model.addAttribute("unassignedAppointments", unassignedAppointments);
-    //  List<Doctor> availableDoctors = appointmentService.getAvailableDoctorsAtSlot(appointmentId);
-    //  model.addAttribute("appointmentId", appointmentId);
-    //  model.addAttribute("availableDoctors", availableDoctors);
+    // public String showAssignDoctorForm(@RequestParam int appointmentId, Model
+    // model) {
+    // // List<Appointment> unassignedAppointments =
+    // appointmentService.getUnassignedAppointments();
+    // // List<Doctor> availableDoctors = doctorRepository.findAll();
+    // // List<Doctor> availableDoctors =
+    // appointmentService.getAvailableDoctorsAtSlot(appointmentId);
+    // // model.addAttribute("unassignedAppointments", unassignedAppointments);
+    // List<Doctor> availableDoctors =
+    // appointmentService.getAvailableDoctorsAtSlot(appointmentId);
+    // model.addAttribute("appointmentId", appointmentId);
+    // model.addAttribute("availableDoctors", availableDoctors);
 
-    //     return "assign-doctor-admin";
+    // return "assign-doctor-admin";
     // }
 
     @PostMapping("/assign-doctor")
@@ -159,96 +178,101 @@ public class AppointmentController {
         return appointmentService.getAppointmentStatus(appointmentId);
     }
 }
-		
-	
 
-    //     @GetMapping("/addDoctor")
-    // public String getDoctorForm(Model model)
-    // {
-    //     Doctor Doctor = new Doctor();
-    //     model.addAttribute("diseaseList",diseaseService.getAllDiseases());
-    //     model.addAttribute("doctor",Doctor);
-    //     return "doctors/addDoctor";
-    // }
+// @GetMapping("/addDoctor")
+// public String getDoctorForm(Model model)
+// {
+// Doctor Doctor = new Doctor();
+// model.addAttribute("diseaseList",diseaseService.getAllDiseases());
+// model.addAttribute("doctor",Doctor);
+// return "doctors/addDoctor";
+// }
 
-    // @PostMapping("/save")
-    // public String saveDoctor(@ModelAttribute("doctor") Doctor theDoctor)
-    // {
+// @PostMapping("/save")
+// public String saveDoctor(@ModelAttribute("doctor") Doctor theDoctor)
+// {
 
-    //     doctorService.save(theDoctor);
-    //     return "redirect:/doctors/list";
-    // }
-	
-	// @PutMapping("/updateAppointment")
-	// @CrossOrigin
-	// public ResponseEntity<Appointment> updateAppointment(@RequestParam String key, @RequestBody Appointment newAppointment) throws LoginException, AppointmentException, PatientException, DoctorException, IOException, TimeDateException{
-		
-	// 	if(loginService.checkUserLoginOrNot(key)) {
-			
-	// 		Appointment updatedAppointment = patientService.updateAppointment(key, newAppointment); 
-			
-			
-	// 		return new ResponseEntity<Appointment>(updatedAppointment, HttpStatus.ACCEPTED);
-			
-			
-	// 	}else {
-			
-	// 		throw new LoginException("Invalid key or please login first");
-			
-	// 	}
-		
-	// }
-	
-	// @PostMapping("/availableTiming")
-	// @CrossOrigin
-	// public ResponseEntity<List<LocalDateTime>> getAvailbleTimingOfDoctor(@RequestParam String key, @RequestBody Doctor doctor) throws IOException, TimeDateException, LoginException, DoctorException{
-		
-	// 	if(loginService.checkUserLoginOrNot(key)) {
-			
-	// 		List<LocalDateTime> listOfAvailable = doctorService.getDoctorAvailableTimingForBooking(key, doctor);
-			
-	// 		return new ResponseEntity<List<LocalDateTime>>(listOfAvailable, HttpStatus.ACCEPTED);
-			
-			 
-	// 	}else {
-			
-	// 		throw new LoginException("Invalid key or please login first");
-			
-	// 	}
-	// }
-	
-	// @GetMapping("/getAllDoctors")
-	// @CrossOrigin
-	// public ResponseEntity<List<Doctor>> getAllDoctors(@RequestParam String key) throws LoginException, DoctorException{
-	// 	if(loginService.checkUserLoginOrNot(key)) {
-			
-	// 		List<Doctor> listOfDoctors = patientService.getAllDoctors();
-			
-	// 		return new ResponseEntity<List<Doctor>>(listOfDoctors, HttpStatus.ACCEPTED);
-			
-			 
-	// 	}else {
-			
-	// 		throw new LoginException("Invalid key or please login first");
-			
-	// 	}
-	// }
-	
-	// @DeleteMapping("/appointment")
-	// @CrossOrigin
-	// public ResponseEntity<Appointment> deleteAppointment(@RequestParam String key, @RequestBody Appointment appointment) throws AppointmentException, DoctorException, Exception{
-		
-	// 	if(loginService.checkUserLoginOrNot(key)) {
-			
-	// 		Appointment listOfDoctors = patientService.deleteAppointment(appointment); 
-			
-	// 		return new ResponseEntity<Appointment>(listOfDoctors, HttpStatus.ACCEPTED);
-			
-			 
-	// 	}else {
-			
-	// 		throw new LoginException("Invalid key or please login first");
-			
-	// 	}
-	// }
+// doctorService.save(theDoctor);
+// return "redirect:/doctors/list";
+// }
 
+// @PutMapping("/updateAppointment")
+// @CrossOrigin
+// public ResponseEntity<Appointment> updateAppointment(@RequestParam String
+// key, @RequestBody Appointment newAppointment) throws LoginException,
+// AppointmentException, PatientException, DoctorException, IOException,
+// TimeDateException{
+
+// if(loginService.checkUserLoginOrNot(key)) {
+
+// Appointment updatedAppointment = patientService.updateAppointment(key,
+// newAppointment);
+
+// return new ResponseEntity<Appointment>(updatedAppointment,
+// HttpStatus.ACCEPTED);
+
+// }else {
+
+// throw new LoginException("Invalid key or please login first");
+
+// }
+
+// }
+
+// @PostMapping("/availableTiming")
+// @CrossOrigin
+// public ResponseEntity<List<LocalDateTime>>
+// getAvailbleTimingOfDoctor(@RequestParam String key, @RequestBody Doctor
+// doctor) throws IOException, TimeDateException, LoginException,
+// DoctorException{
+
+// if(loginService.checkUserLoginOrNot(key)) {
+
+// List<LocalDateTime> listOfAvailable =
+// doctorService.getDoctorAvailableTimingForBooking(key, doctor);
+
+// return new ResponseEntity<List<LocalDateTime>>(listOfAvailable,
+// HttpStatus.ACCEPTED);
+
+// }else {
+
+// throw new LoginException("Invalid key or please login first");
+
+// }
+// }
+
+// @GetMapping("/getAllDoctors")
+// @CrossOrigin
+// public ResponseEntity<List<Doctor>> getAllDoctors(@RequestParam String key)
+// throws LoginException, DoctorException{
+// if(loginService.checkUserLoginOrNot(key)) {
+
+// List<Doctor> listOfDoctors = patientService.getAllDoctors();
+
+// return new ResponseEntity<List<Doctor>>(listOfDoctors, HttpStatus.ACCEPTED);
+
+// }else {
+
+// throw new LoginException("Invalid key or please login first");
+
+// }
+// }
+
+// @DeleteMapping("/appointment")
+// @CrossOrigin
+// public ResponseEntity<Appointment> deleteAppointment(@RequestParam String
+// key, @RequestBody Appointment appointment) throws AppointmentException,
+// DoctorException, Exception{
+
+// if(loginService.checkUserLoginOrNot(key)) {
+
+// Appointment listOfDoctors = patientService.deleteAppointment(appointment);
+
+// return new ResponseEntity<Appointment>(listOfDoctors, HttpStatus.ACCEPTED);
+
+// }else {
+
+// throw new LoginException("Invalid key or please login first");
+
+// }
+// }

@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <h1>Welcome to Hospital 101!</h1>
-        <h2>Welcome, Patient <span th:text="${user.name}"></span>. Here is your patient record.</h2>
+        <h2>Welcome, Patient. Here is your patient record.</h2>
         <div><br></div>
         <h3>Patient Information</h2>
         <div>
@@ -56,7 +56,7 @@
                     <!-- Iterate over patientDiseases list -->
                     <tr th:each="patientDisease : ${patientDiseases}">
                         <td th:text="${patientDisease.id}"></td>
-                <td th:text="${patientDisease.patientID}"></td>
+                <td th:text="${patientDisease.userId}"></td>
                 <td th:text="${patientDisease.diseaseID}"></td>
                 <td th:text="${patientDisease.doctorID}"></td>
                 <td th:text="${patientDisease.status}"></td>

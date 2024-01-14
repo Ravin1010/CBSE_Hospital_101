@@ -1,26 +1,23 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.Throwable.DiseaseNotFoundException;
 import com.example.demo.entity.Disease;
-import com.example.demo.entity.Doctor;
 import com.example.demo.entity.TreatmentPlan;
 import com.example.demo.service.DiseaseService;
 import com.example.demo.service.DoctorService;
-import com.example.demo.service.PatientService;
+import com.example.demo.service.PatientDiseaseAdminService;
 import com.example.demo.service.TreatmentPlanService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/diseases")
@@ -28,19 +25,20 @@ public class DiseaseController {
 
     // load employee data
     private DoctorService doctorService;
-    private PatientService patientService;
+    private PatientDiseaseAdminService patientService;
     private DiseaseService diseaseService;
     private TreatmentPlanService tpService;
-    
+
     private List<Disease> theDiseases;
 
-    public DiseaseController(DoctorService doctorService, PatientService patientService, DiseaseService diseaseService, TreatmentPlanService tpService) {
+    public DiseaseController(DoctorService doctorService, PatientDiseaseAdminService patientService,
+            DiseaseService diseaseService, TreatmentPlanService tpService) {
         this.doctorService = doctorService;
         this.patientService = patientService;
         this.diseaseService = diseaseService;
         this.tpService = tpService;
     }
-    
+
     @GetMapping("/diseaseModule")
     public String listDoctors() {
         return "disease/diseaseModule";
@@ -70,7 +68,7 @@ public class DiseaseController {
     }
 
     @GetMapping("/showFormForUpdate")
-    public String showUpdateForm(@RequestParam("diseaseId") int theID, Model model, RedirectAttributes ra){
+    public String showUpdateForm(@RequestParam("diseaseId") int theID, Model model, RedirectAttributes ra) {
         try {
             model.addAttribute("disease", diseaseService.findById(theID));
             List<TreatmentPlan> listTPs = tpService.listAll();
@@ -84,6 +82,7 @@ public class DiseaseController {
     }
 
     @GetMapping("/delete")
+    @jakarta.transaction.Transactional
     public String deleteDoctor(@RequestParam("diseaseId") int id, RedirectAttributes ra) {
 
         try {

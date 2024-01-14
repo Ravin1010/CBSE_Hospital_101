@@ -35,7 +35,7 @@ public class PatientDiseaseController {
         User user = (User) session.getAttribute("user");
 
         // Retrieve patient disease data based on user ID
-        List<PatientDisease> patientDiseases = patientDiseaseRepository.findByPatientID(user.getUser_id());
+        List<PatientDisease> patientDiseases = patientDiseaseRepository.findByUserId(user.getUser_id());
 
         model.addAttribute("patientDiseases", patientDiseases);
 

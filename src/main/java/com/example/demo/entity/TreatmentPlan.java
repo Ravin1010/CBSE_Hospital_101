@@ -4,24 +4,24 @@
  */
 package com.example.demo.entity;
 
-
-import com.springRest.DAO.IntegerListAttributeConverter;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  *
@@ -33,6 +33,7 @@ public class TreatmentPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tpID")
     private Integer tpID;
 
     @Column(nullable = false, length = 100, name = "tp_name")
@@ -41,8 +42,8 @@ public class TreatmentPlan {
     @Convert(converter = IntegerListAttributeConverter.class)
     @Column(name = "medicine_ids")
     private List<Integer> medicine_ids;
-    
-    @OneToMany(mappedBy = "tp")
+
+    @OneToMany
     List<Medicine> medicines;
 
     @Convert(converter = IntegerListAttributeConverter.class)
@@ -63,9 +64,9 @@ public class TreatmentPlan {
     private String treatment_frequency;
 
     @Column(name = "created_at")
-    @CreationTimestamp //this adds the default timestamp on save
+    @CreationTimestamp // this adds the default timestamp on save
     private Timestamp created_at;
-    
+
     @OneToOne(mappedBy = "tp")
     private Disease disease;
 
@@ -108,11 +109,11 @@ public class TreatmentPlan {
     public Disease getDisease() {
         return disease;
     }
-    
+
     public void setTp_name(String tp_name) {
         this.tp_name = tp_name;
     }
-    
+
     public void setMedicine_ids(List<Integer> medicine_ids) {
         this.medicine_ids = medicine_ids;
     }
@@ -135,6 +136,10 @@ public class TreatmentPlan {
 
     public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
-    } 
+    }
+
+    public void setTpID(Integer tpID) {
+        this.tpID = tpID;
+    }
 
 }

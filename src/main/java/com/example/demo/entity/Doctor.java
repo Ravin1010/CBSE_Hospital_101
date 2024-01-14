@@ -12,26 +12,24 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "doctor")
-public class Doctor
-{
+public class Doctor {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
-    @Column(name="doctor_name")
+    @Column(name = "doctor_name")
     private String name;
-    @Column(name="father_name")
+    @Column(name = "father_name")
     private String fatherName;
-    @Column(name="gender")
+    @Column(name = "gender")
     private String gender;
-    @Column(name="cnic")
+    @Column(name = "cnic")
     private String cnic;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="date_of_birth")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
-    @Column(name="specialization")
+    @Column(name = "specialization")
     private String specialization;
     // @ManyToOne
     // @JoinColumn(name = "role_id")
@@ -40,13 +38,12 @@ public class Doctor
     @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
 
-    public Doctor()
-    {
+    public Doctor() {
 
     }
 
-    public Doctor(String name, String fatherName, String gender, String CNIC, String email, Date dateOfBirth, String specialization)
-    {
+    public Doctor(String name, String fatherName, String gender, String CNIC, String email, Date dateOfBirth,
+            String specialization) {
         this.name = name;
         this.fatherName = fatherName;
         this.gender = gender;
@@ -56,90 +53,72 @@ public class Doctor
         this.specialization = specialization;
     }
 
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
-    public void setId(int id)
-    {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getFatherName()
-    {
+    public String getFatherName() {
         return fatherName;
     }
 
-    public void setFatherName(String fatherName)
-    {
+    public void setFatherName(String fatherName) {
         this.fatherName = fatherName;
     }
 
-    public String getGender()
-    {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender)
-    {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public String getCnic()
-    {
+    public String getCnic() {
         return cnic;
     }
 
-    public void setCnic(String cnic)
-    {
+    public void setCnic(String cnic) {
         this.cnic = cnic;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Date getDateOfBirth()
-    {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth)
-    {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getSpecialization()
-    {
+    public String getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization)
-    {
+    public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
 
-
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Doctor{" +
                 "id=" + id +
                 ", Name='" + name + '\'' +

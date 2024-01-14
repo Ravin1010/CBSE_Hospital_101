@@ -35,7 +35,6 @@ public class AppController {
     @Autowired
     private PatientDiseaseRepository patientDiseaseRepository;
 
-
     @GetMapping("")
     public String viewHomePage() {
         return "app/index";
@@ -142,84 +141,5 @@ public class AppController {
             return "redirect:/login";
         }
     }
-
-    @GetMapping("/manage-patient-record-user")
-    public String managePatientRecord(Model model, HttpSession session) {
-        // Retrieve user details from the session
-        User user = (User) session.getAttribute("user");
-
-        // Retrieve patient disease data based on user ID
-        List<PatientDisease> patientDiseases = patientDiseaseRepository.findByUserId(user.getUser_id());
-
-        model.addAttribute("patientDiseases", patientDiseases);
-
-        // Pass user information to the model
-        model.addAttribute("user", user);
-
-        // Other logic for the manage patient record page
-        return "manage_patient_record_user";
-    }
-
-    @PostMapping("/update-request-status")
-    @ResponseBody
-    public String updateRequestStatus(@RequestParam int pdId) {
-        // Find the patient disease record by ID
-        Optional<PatientDisease> optionalPatientDisease = patientDiseaseRepository.findById(pdId);
-
-        if (optionalPatientDisease.isPresent()) {
-            PatientDisease patientDisease = optionalPatientDisease.get();
-
-            // Update the request status
-            patientDisease.setRequestStatus("yes");
-
-            // Save the updated record
-            patientDiseaseRepository.save(patientDisease);
-
-            return "Success";
-        } else {
-            return "Error: Patient Disease record not found";
-        }
-    }
-
-    @GetMapping("/manage-patient-record-admin")
-    public String managePatientRecordAdmin(Model model, HttpSession session) {
-        // Retrieve user details from the session
-        User user = (User) session.getAttribute("user");
-
-        // Retrieve patient disease data based on user ID
-        List<PatientDisease> patientDiseases = patientDiseaseRepository.findByStatusAndRequestStatus("active", "yes");
-
-        // Pass user information to the model
-        model.addAttribute("user", user);
-        model.addAttribute("patientDiseases", patientDiseases);
-
-        // Other logic for the manage patient record page
-        return "manage_patient_record_admin";
-    }
-
-    @PostMapping("/update-patient-record-status")
-    @ResponseBody
-    public String updatePatientRecordStatus(@RequestParam int pdId) {
-        // Find the patient disease record by ID
-        Optional<PatientDisease> optionalPatientDisease = patientDiseaseRepository.findById(pdId);
-
-        if (optionalPatientDisease.isPresent()) {
-            PatientDisease patientDisease = optionalPatientDisease.get();
-
-            // Update the request status
-            patientDisease.setStatus("inactive");
-
-            // Save the updated record
-            patientDiseaseRepository.save(patientDisease);
-
-            return "Success";
-        } else {
-            return "Error: Patient Disease record not found";
-        }
-    }
-
-
-
-
 
 }

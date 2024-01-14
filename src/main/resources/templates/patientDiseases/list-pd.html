@@ -1,82 +1,99 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="/Footer/css/Article-List.css" />
+    <link rel="stylesheet" href="/Footer/css/Footer-Dark.css" />
+    <link rel="stylesheet" href="/Footer/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css" />
+    <link
+      rel="stylesheet"
+      href="/nav-bar/css/Registration-Form-with-Photo.css"
+    />
+    <link rel="stylesheet" href="/nav-bar/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css" />
+    <title>Disease Module</title>
+  </head>
 
-        <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css">
-        <link rel="stylesheet" href="/Footer/css/Article-List.css">
-        <link rel="stylesheet" href="/Footer/css/Footer-Dark.css">
-        <link rel="stylesheet" href="/Footer/css/styles.css">
-        <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css">
-        <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css">
-        <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css">
-        <link rel="stylesheet" href="/nav-bar/css/Registration-Form-with-Photo.css">
-        <link rel="stylesheet" href="/nav-bar/css/styles.css">
-        <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css">
-        <title>Disease Module</title>
-    </head>
-
-    <body>
-        <div th:replace="navbar/admin_navbar :: nav"></div>
-        <div class="container-fluid text-center">
-            <div><h2>Manage Patients' Diseases</h2></div>
-            <div class="m-2">
-                <div class="row">
-                    <div class="col-6">
-                        <a class="h3" th:href="@{/diseases/diseaseModule}">Disease Module</a>
-                    </div>
-                    <div class="col-6">
-                        <a class="h3" th:href="@{/patientDiseases/newPD}">Add Patient Disease</a>
-                    </div>
-                </div>
-            </div>
-            <div th:if="${message}" class="alert alert-success">
-                [[${message}]]
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Patient Name</th>
-                            <th>Disease Name</th>
-                            <th>Doctor Name</th>
-                            <th>Status</th>
-                            <th>Request Status</th>
-                            <th>Created At</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:each="pd : ${listPDs}">
-                        <tr>
-                            <td>[[${pd.id}]]</td>
-                            <td>[[${pd.patientName}]]</td>
-                            <td>[[${pd.diseaseName}]]</td>
-                            <td>[[${pd.docName}]]</td>
-                            <td>[[${pd.status}]]</td>
-                            <td>[[${pd.requestStatus}]]</td>
-                            <td>[[${pd.created_at}]]</td>
-                            <td>
-                                <a class="btn btn-info btn-sm" th:href="@{/patientDiseases/editPD(pdID=${pd.id})}">Edit</a>
-                                <a class="btn btn-danger btn-sm" th:href="@{'/patientDiseases/deletePD/' + ${pd.id}}">Delete</a>
-                            </td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
-            </div>
+  <body>
+    <div th:replace="navbar/admin_navbar :: nav"></div>
+    <div class="container-fluid text-center">
+      <div><h2>Manage Patients' Diseases</h2></div>
+      <div class="m-2">
+        <div class="row">
+          <div class="col-6">
+            <a class="h3" th:href="@{/diseases/diseaseModule}"
+              >Disease Module</a
+            >
+          </div>
+          <div class="col-6">
+            <a class="h3" th:href="@{/patientDiseases/newPD}"
+              >Add Patient Disease</a
+            >
+          </div>
         </div>
-    </body>
-
-    <div th:replace="fragments/Footer/Footer :: footer"></div>
-
+      </div>
+      <div th:if="${message}" class="alert alert-success">[[${message}]]</div>
+      <div>
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>Patient ID</th>
+              <th>Disease ID</th>
+              <th>Doctor ID</th>
+              <th>Status</th>
+              <th>Request Status</th>
+              <th>Created At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <th:block th:each="pd : ${listPDs}">
+              <tr>
+                <td>[[${pd.id}]]</td>
+                <td>[[${pd.userId}]]</td>
+                <td>[[${pd.diseaseID}]]</td>
+                <td>[[${pd.doctorID}]]</td>
+                <td>[[${pd.status}]]</td>
+                <td>[[${pd.requestStatus}]]</td>
+                <td>[[${pd.created_at}]]</td>
+                <td>
+                  <a
+                    class="btn btn-info btn-sm"
+                    th:href="@{/patientDiseases/editPD(pdID=${pd.id})}"
+                    >Edit</a
+                  >
+                  <a
+                    class="btn btn-danger btn-sm"
+                    th:href="@{'/patientDiseases/deletePD/' + ${pd.id}}"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+            </th:block>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,90 +1,107 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="/Footer/css/Article-List.css" />
+    <link rel="stylesheet" href="/Footer/css/Footer-Dark.css" />
+    <link rel="stylesheet" href="/Footer/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css" />
+    <link
+      rel="stylesheet"
+      href="/nav-bar/css/Registration-Form-with-Photo.css"
+    />
+    <link rel="stylesheet" href="/nav-bar/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css" />
+    <title>Disease Module</title>
+  </head>
 
-        <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css">
-        <link rel="stylesheet" href="/Footer/css/Article-List.css">
-        <link rel="stylesheet" href="/Footer/css/Footer-Dark.css">
-        <link rel="stylesheet" href="/Footer/css/styles.css">
-        <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css">
-        <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css">
-        <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css">
-        <link rel="stylesheet" href="/nav-bar/css/Registration-Form-with-Photo.css">
-        <link rel="stylesheet" href="/nav-bar/css/styles.css">
-        <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css">
-        <title>Disease Module</title>
-    </head>
-
-    <body>
-        <div th:replace="navbar/admin_navbar :: nav"></div>
-        <div class="container-fluid text-center">
-            <div><h2>Manage Treatment Plans</h2></div>
-            <div class="m-2">
-                <div class="row">
-                    <div class="col-6">
-                        <a class="h3" th:href="@{/diseases/diseaseModule}">Disease Module</a>
-                    </div>
-                    <div class="col-6">
-                        <a class="h3" th:href="@{/treatment_plans/newTP}">Add New Treatment Plan</a>
-                    </div>
-                </div>
-            </div>
-            <div th:if="${message}" class="alert alert-success">
-                [[${message}]]
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>TP Name</th>
-                            <th>Medicines</th>
-                            <th>Date</th>
-                            <th>Frequency</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:each="tp : ${listTreatmentPlans}">
-                        <tr>
-                            <td>[[${tp.tpID}]]</td>
-                            <td>[[${tp.tp_name}]]</td>
-                            <!--                            <td>[[${tp.medicine_ids}]]</td>-->
-                            <td>
-                                <table class="w-100">
-                                    <tr>
-                                        <td>Name</td>
-                                        <td>Amount</td>
-                                    </tr>
-                                    <tr th:each="medicine : ${tp.medicines}">
-                                        <td th:text="${medicine.name}"></td>
-                                        <td th:text="${medicine.stock}"></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>[[${tp.start_date}]] ~ [[${tp.end_date}]]</td>
-                            <td>[[${tp.treatment_frequency}]]</td>
-                            <td>
-                                <a class="btn btn-info btn-sm" th:href="@{'/treatment_plans/editTP/' + ${tp.tpID}}">Edit</a>
-                                <a class="btn btn-danger btn-sm" th:href="@{'/treatment_plans/deleteTP/' + ${tp.tpID}}">Delete</a>
-                            </td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
-            </div>
+  <body>
+    <div th:replace="navbar/admin_navbar :: nav"></div>
+    <div class="container-fluid text-center">
+      <div><h2>Manage Treatment Plans</h2></div>
+      <div class="m-2">
+        <div class="row">
+          <div class="col-6">
+            <a class="h3" th:href="@{/diseases/diseaseModule}"
+              >Disease Module</a
+            >
+          </div>
+          <div class="col-6">
+            <a class="h3" th:href="@{/treatment_plans/newTP}"
+              >Add New Treatment Plan</a
+            >
+          </div>
         </div>
-    </body>
-
-    <div th:replace="fragments/Footer/Footer :: footer"></div>
-
+      </div>
+      <div th:if="${message}" class="alert alert-success">[[${message}]]</div>
+      <div>
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>TP Name</th>
+              <th>Medicines</th>
+              <th>Date</th>
+              <th>Frequency</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <th:block th:each="tp : ${listTreatmentPlans}">
+              <tr>
+                <td>[[${tp.tpID}]]</td>
+                <td>[[${tp.tp_name}]]</td>
+                <!--                            <td>[[${tp.medicine_ids}]]</td>-->
+                <td>
+                  <table class="w-100">
+                    <tr>
+                      <td>Name</td>
+                      <td>Amount</td>
+                    </tr>
+                    <tr th:each="medicine : ${tp.medicines}">
+                      <td th:text="${medicine.name}"></td>
+                      <td th:text="${medicine.stock}"></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>[[${tp.start_date}]] ~ [[${tp.end_date}]]</td>
+                <td>[[${tp.treatment_frequency}]]</td>
+                <td>
+                  <a
+                    class="btn btn-info btn-sm"
+                    th:href="@{/treatment_plans/editTP(tpID=${tp.tpID})}"
+                    >Edit</a
+                  >
+                  <a
+                    class="btn btn-danger btn-sm"
+                    th:href="@{'/treatment_plans/deleteTP/' + ${tp.tpID}}"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+            </th:block>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>

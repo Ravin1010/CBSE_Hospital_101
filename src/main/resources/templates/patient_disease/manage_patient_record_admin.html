@@ -14,8 +14,8 @@
       <div class="row">
         <h1>Hospital 101!</h1>
         <h2>
-          Welcome, Admin <span th:text="${user.name}"></span>. Here are the
-          patient records. You can choose to approve their status to inactive.
+          Welcome, Admin. Here are the patient records. You can choose to
+          approve their status to inactive.
         </h2>
         <div><br /></div>
         <div><br /></div>
@@ -38,7 +38,7 @@
               <!-- Iterate over patientDiseases list -->
               <tr th:each="patientDisease : ${patientDiseases}">
                 <td th:text="${patientDisease.id}"></td>
-                <td th:text="${patientDisease.patientID}"></td>
+                <td th:text="${patientDisease.userId}"></td>
                 <td th:text="${patientDisease.diseaseID}"></td>
                 <td th:text="${patientDisease.doctorID}"></td>
                 <td th:text="${patientDisease.status}"></td>

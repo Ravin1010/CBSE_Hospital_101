@@ -43,8 +43,9 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(int appointmentId, int userId, LocalDate date, LocalTime slot, String treatmentType, String status,
-        int doctorId, String note) {
+    public Appointment(int appointmentId, int userId, LocalDate date, LocalTime slot, String treatmentType,
+            String status,
+            int doctorId, String note) {
         this.appointmentId = appointmentId;
         // this.userId = userId;
         this.date = date;
@@ -56,11 +57,11 @@ public class Appointment {
     }
 
     // public int getAppointmentId() {
-    //     return this.appointmentId;
+    // return this.appointmentId;
     // }
 
     // public void setAppointmentId(int appointmentId) {
-    //     this.appointmentId = appointmentId;
+    // this.appointmentId = appointmentId;
     // }
 
     public int getUserId() {
@@ -70,7 +71,6 @@ public class Appointment {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
 
     public LocalDate getDate() {
         return this.date;
@@ -91,7 +91,7 @@ public class Appointment {
     public String getTreatmentType() {
         return this.treatmentType;
     }
-    
+
     public void setTreatmentType(String treatmentType) {
         this.treatmentType = treatmentType;
     }
@@ -105,32 +105,29 @@ public class Appointment {
     }
 
     // public int getDoctorId() {
-    //     return this.doctorId;
+    // return this.doctorId;
     // }
-    public Doctor getDoctor()
-    {
+    public Doctor getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(Doctor doctor)
-    {
+    public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
     // public void setDoctorId(int doctorId) {
-    //     this.doctorId = doctorId;
+    // this.doctorId = doctorId;
     // }
-
 
     public String getNote() {
         return this.treatmentType;
     }
-    
+
     public void setNote(String note) {
         this.note = note;
     }
 
     // public Collection<Appointment> getAppointments() {
-    //     return null;
+    // return null;
     // }
-            
+
 }

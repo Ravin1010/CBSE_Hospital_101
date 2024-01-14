@@ -16,22 +16,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/avalability")
-public class AvailabilityController
-{
+public class AvailabilityController {
 
     // load employee data
     private AvailabilityService availabilityService;
     private DoctorService doctorService;
     private List<Availability> available;
 
-    public AvailabilityController(AvailabilityService availabilityService, DoctorService doctorService)
-    {
+    public AvailabilityController(AvailabilityService availabilityService, DoctorService doctorService) {
         this.availabilityService = availabilityService;
         this.doctorService = doctorService;
     }
@@ -39,17 +37,9 @@ public class AvailabilityController
     @GetMapping("/available-slots")
     public ResponseEntity<?> getAvailableTimeSlotsByShopIdAndDate(
             @PathVariable int doctorId,
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date)
+            throws JsonProcessingException, ParseException {
 
         return availabilityService.getAvailableTimeSlots(doctorId, date);
     }
 }
-
-
-
-
-
-
-
-
-

@@ -1,102 +1,126 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="/Footer/css/Article-List.css" />
+    <link rel="stylesheet" href="/Footer/css/Footer-Dark.css" />
+    <link rel="stylesheet" href="/Footer/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css" />
+    <link
+      rel="stylesheet"
+      href="/nav-bar/css/Registration-Form-with-Photo.css"
+    />
+    <link rel="stylesheet" href="/nav-bar/css/styles.css" />
+    <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css" />
+    <title>Save disease</title>
+  </head>
 
-        <link rel="stylesheet" href="/Footer/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/Footer/fonts/ionicons.min.css">
-        <link rel="stylesheet" href="/Footer/css/Article-List.css">
-        <link rel="stylesheet" href="/Footer/css/Footer-Dark.css">
-        <link rel="stylesheet" href="/Footer/css/styles.css">
-        <link rel="stylesheet" href="/nav-bar/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/nav-bar/css/Contact-Form-Clean.css">
-        <link rel="stylesheet" href="/nav-bar/css/Login-Form-Dark.css">
-        <link rel="stylesheet" href="/nav-bar/css/Navigation-with-Button.css">
-        <link rel="stylesheet" href="/nav-bar/css/Registration-Form-with-Photo.css">
-        <link rel="stylesheet" href="/nav-bar/css/styles.css">
-        <link rel="stylesheet" href="/nav-bar/css/Team-Boxed.css">
-        <title>Save disease</title>
-    </head>
+  <body>
+    <div th:replace="navbar/admin_navbar :: nav"></div>
+    <div class="container">
+      <div class="text-center">
+        <h2>[[${pageTitle}]]</h2>
+      </div>
 
-    <body>
-        <div th:replace="navbar/admin_navbar :: nav"></div>
-        <div class="container">
-            <div class="text-center">
-                <h2>[[${pageTitle}]]</h2>
+      <form
+        th:action="@{/patientDiseases/updatePD}"
+        method="post"
+        th:object="${patientDisease}"
+        style="max-width: 500px; margin: 0 auto"
+      >
+        <input type="hidden" th:field="*{id}" />
+        <div class="border border-secondary rounded p-3">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Patient:</label>
+            <div class="col-sm-8">
+              <select class="form-control" th:field="*{userId}" required>
+                <th:block th:each="patient : ${patients}">
+                  <option
+                    th:value="${patient.user_id}"
+                    th:text="${patient.name}"
+                  />
+                </th:block>
+              </select>
             </div>
-
-            <form th:action="@{/patientDiseases/updatePD}" method="post" th:object="${patientDisease}" style="max-width: 500px; margin: 0 auto;">
-                <input type="hidden" th:field="*{id}">
-                <div class="border border-secondary rounded p-3">
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Patient:</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" th:field="*{patientID}" required>
-                                <th:block th:each="patient : ${patients}">
-                                    <option th:value="${patient.id}" th:text="${patient.patientName}" />
-                                </th:block>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Patient's Disease:</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" th:field="*{diseaseID}" required>
-                                <th:block th:each="disease : ${diseases}">
-                                    <option th:value="${disease.id}" th:text="${disease.diseaseName}" />
-                                </th:block>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Doctor assigned:</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" th:field="*{doctorID}" required>
-                                <th:block th:each="doctor : ${doctors}">
-                                    <option th:value="${doctor.id}" th:text="${doctor.Name}" />
-                                </th:block>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Status:</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" th:field="*{status}" required>
-                                <option th:value="active" th:text="Active" />
-                                <option th:value="completed" th:text="Completed" />
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Request status:</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" th:field="*{requestStatus}" required>
-                                <option th:value="yes" th:text="Yes" />
-                                <option th:value="no" th:text="No" />
-                            </select>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary m-2">Save</button>
-                        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm();">Cancel</button>
-                    </div>
-                </div>
-            </form>
-            <div class="m-4"></div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Patient's Disease:</label>
+            <div class="col-sm-8">
+              <select class="form-control" th:field="*{diseaseID}" required>
+                <th:block th:each="disease : ${diseases}">
+                  <option
+                    th:value="${disease.id}"
+                    th:text="${disease.diseaseName}"
+                  />
+                </th:block>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Doctor assigned:</label>
+            <div class="col-sm-8">
+              <select class="form-control" th:field="*{doctorID}" required>
+                <th:block th:each="doctor : ${doctors}">
+                  <option th:value="${doctor.id}" th:text="${doctor.Name}" />
+                </th:block>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Status:</label>
+            <div class="col-sm-8">
+              <select class="form-control" th:field="*{status}" required>
+                <option th:value="active" th:text="Active" />
+                <option th:value="inactive" th:text="Inactive" />
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Request status:</label>
+            <div class="col-sm-8">
+              <select class="form-control" th:field="*{requestStatus}" required>
+                <option th:value="yes" th:text="Yes" />
+                <option th:value="no" th:text="No" />
+              </select>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary m-2">Save</button>
+            <button
+              type="button"
+              class="btn btn-secondary m-2"
+              onclick="cancelForm();"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-        <script type="text/javascript">
-            function cancelForm() {
-                window.location = "[[@{/patientDiseases/list}]]";
-            }
-        </script>
-    </body>
-
-    <div th:replace="fragments/Footer/Footer :: footer"></div>
-
+      </form>
+      <div class="m-4"></div>
+    </div>
+    <script type="text/javascript">
+      function cancelForm() {
+        window.location = "[[@{/patientDiseases/list}]]";
+      }
+    </script>
+  </body>
 </html>

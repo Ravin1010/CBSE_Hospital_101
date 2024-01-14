@@ -1,12 +1,9 @@
-package com.springRest.DAO;
+package com.example.demo.repository;
 
-import com.example.demo.enitity.Disease;
-import javax.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.demo.entity.Disease;
 
-public interface DiseaseRepository extends JpaRepository<Disease, Integer>
-{
+public interface DiseaseRepository extends JpaRepository<Disease, Integer> {
     public Long countById(int id);
 }

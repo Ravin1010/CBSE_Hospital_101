@@ -29,9 +29,6 @@ public class PatientDisease {
     @CreationTimestamp // this adds the default timestamp on save
     private Timestamp created_at;
 
-    private String docName;
-    private String patientName;
-    private String diseaseName;
     public PatientDisease() {
     }
 
@@ -54,13 +51,14 @@ public class PatientDisease {
         this.id = id;
     }
 
-    public Integer getPatientID() {
-        return userId;
+    public Integer getUserId() {
+        return this.userId;
     }
 
-    public void setPatientID(Integer userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
 
     public Integer getDiseaseID() {
         return diseaseID;

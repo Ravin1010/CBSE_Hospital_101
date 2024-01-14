@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.repository.AppointmentRepository;
 import com.example.demo.repository.AvailabilityRepository;
 import com.example.demo.repository.DoctorRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.entity.Appointment;
 import com.example.demo.entity.Availability;
 import com.example.demo.entity.Doctor;
 
@@ -24,15 +26,14 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 @Service
-public class AvailabilityService
-{
+public class AvailabilityService {
     private AvailabilityRepository availabilityRepository;
     private final ObjectMapper objectMapper;
     private final DoctorRepository doctorRepository;
-    
+    private AppointmentRepository appointmentRepository;
 
-    public AvailabilityService(AvailabilityRepository availabilityRepository, DoctorRepository doctorRepository, ObjectMapper objectMapper)
-    {
+    public AvailabilityService(AvailabilityRepository availabilityRepository, DoctorRepository doctorRepository,
+            ObjectMapper objectMapper) {
         this.availabilityRepository = availabilityRepository;
         this.objectMapper = objectMapper;
         this.doctorRepository = doctorRepository;
@@ -54,8 +55,8 @@ public class AvailabilityService
 
         Optional<Doctor> doctor = doctorRepository.findById(doctorId);
 
-        List<Appointment> bookedAppointments = appointmentRepository.findByDoctorIdAndStartTimeBetween(
-                    doctorId, startDate, endDate);
+        List<Availability> bookedAppointments = availabilityRepository.findByDoctorIdAndStartTimeBetween(
+                doctorId, startDate, endDate);
 
         // Fetch shop's working hours
         LocalTime startTime = LocalTime.of(8, 0);
@@ -69,7 +70,7 @@ public class AvailabilityService
     }
 
     private List<String> calculateAvailableTimeSlots(Date startDate, LocalTime startTime, LocalTime endTime,
-            List<Appointment> bookedAppointments) {
+            List<Availability> bookedAppointments) {
         List<String> availableTimeSlots = new ArrayList<>();
 
         // Define time slot duration (59 mins)
@@ -111,8 +112,8 @@ public class AvailabilityService
                     Date slotEndTime = calendar.getTime();
 
                     boolean isSlotAvailable = true;
-                    for (Appointment appointment : bookedAppointments) {
-                        if (slotStartTime.equals(appointment.getStartTime())) {
+                    for (Availability available : bookedAppointments) {
+                        if (slotStartTime.equals(available.getStartTime())) {
                             // There is an overlap with a booked appointment
                             isSlotAvailable = false;
                             break;

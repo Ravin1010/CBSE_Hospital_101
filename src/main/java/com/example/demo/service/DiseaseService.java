@@ -1,17 +1,16 @@
 package com.example.demo.service;
 
-import com.springRest.DAO.DiseaseRepository;
-import com.springRest.DAO.PatientRepository;
-import com.springRest.DAO.TreatmentPlanRepository;
-import com.example.demo.Throwable.DiseaseNotFoundException;
-import com.example.demo.entity.Disease;
-import com.example.demo.entity.Patient;
-import com.example.demo.entity.TreatmentPlan;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.demo.Throwable.DiseaseNotFoundException;
+import com.example.demo.entity.Disease;
+import com.example.demo.entity.TreatmentPlan;
+import com.example.demo.repository.DiseaseRepository;
+import com.example.demo.repository.TreatmentPlanRepository;
 
 @Service
 public class DiseaseService
