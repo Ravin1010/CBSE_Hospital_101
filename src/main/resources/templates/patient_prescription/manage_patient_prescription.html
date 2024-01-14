@@ -33,7 +33,12 @@
                         <td th:text="${acceptedPrescription.tpName}"></td>
                         <td th:text="${acceptedPrescription.medicineId}"></td>
                         <td th:text="${acceptedPrescription.medicineQuantity}"></td>
-                        <td><button class="btn btn-primary" th:onclick="'collectButtonClick(' + ${acceptedPrescription.prescriptionId} + ')'">Collect</button></td>
+                        <td>
+<!--                            <button class="btn btn-primary" th:onclick="'collectButtonClick(' + ${acceptedPrescription.prescriptionId} + ')'">Collect</button>-->
+<!--                            <button onclick="openPaymentPopup([[${acceptedPrescription.prescriptionId}]])">Collect</button>-->
+                            <a th:href="@{/patient-prescription/collect/{prescriptionId}(prescriptionId=${acceptedPrescription.prescriptionId})}" class="btn btn-primary">Collect</a>
+
+                        </td>
                         <!-- <td>
                             <a th:href="@{/patient-prescription/collect(prescriptionId=${acceptedPrescription.prescriptionId})}"
                                class="btn btn-success btn-sm"
@@ -42,27 +47,84 @@
                             </a>
                         </td> -->
                     </tr>
-                </tbody>              
+                </tbody>
             </table>
-            <h4>Prescription History</h3>
+
+                <!-- Success message -->
+                <div th:if="${successMessage}" class="alert alert-success">
+                    <p th:text="${successMessage}"></p>
+                </div>
+
+                <!-- Error message -->
+                <div th:if="${errorMessage}" class="alert alert-danger">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+
+                <!-- ... existing table and other content ... -->
+
+
+                <h4>Prescription History</h3>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Treatment</th>
                             <th>Medicine</th>
-                            <th>Amount</th>
+                            <th>Quantity</th>
+                            <th>Medicine Cost</th>
+                            <th>Consultation fees </th>
+                            <th>Total Payment</th>
+                            <th>Payment Status</th>
                         </tr>
                     </thead>
+<!--                    <tbody>-->
+<!--                        &lt;!&ndash; Iterate over patientDiseases list &ndash;&gt;-->
+<!--                        <tr th:each="collectedPrescription : ${collectedPrescriptionList}">-->
+<!--                            <td th:text="${collectedPrescription.prescriptionName}"></td>-->
+<!--                            <td th:text="${collectedPrescription.tpName}"></td>-->
+<!--                            <td th:text="${collectedPrescription.medicineId}"></td>-->
+<!--                            <td th:text="${collectedPrescription.medicineQuantity}"></td>-->
+<!--                        </tr>-->
+<!--                    </tbody>-->
                     <tbody>
-                        <!-- Iterate over patientDiseases list -->
-                        <tr th:each="collectedPrescription : ${collectedPrescriptionList}">
-                            <td th:text="${collectedPrescription.prescriptionName}"></td>
-                            <td th:text="${collectedPrescription.tpName}"></td>
-                            <td th:text="${collectedPrescription.medicineId}"></td>
-                            <td th:text="${collectedPrescription.medicineQuantity}"></td>
-                        </tr>
-                    </tbody>              
+                    <!-- Iterate over patientDiseases list -->
+                    <tr th:each="collectedPrescription : ${collectedPrescriptionList}">
+                        <td th:text="${collectedPrescription.prescriptionName}"></td>
+                        <td th:text="${collectedPrescription.tpName}"></td>
+                        <td th:text="${collectedPrescription.medicineId}"></td>
+                        <td th:text="${collectedPrescription.medicineQuantity}"></td>
+                        <td>
+                            <div th:each="payment : ${paymentMap[collectedPrescription.prescriptionId]}">
+                                <span th:text="${payment.medicineCost} + ' MYR'"></span>
+                                <!-- ... display other payment details as needed ... -->
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="payment : ${paymentMap[collectedPrescription.prescriptionId]}">
+                                <span th:text="${payment.consultationFee} + ' MYR'"></span>
+                                <!-- ... display other payment details as needed ... -->
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="payment : ${paymentMap[collectedPrescription.prescriptionId]}">
+                                <span th:text="${payment.totalCost} + ' MYR'"></span>
+                                <!-- ... display other payment details as needed ... -->
+                            </div>
+                        </td>
+
+                        <!-- Display payment status -->
+                        <td>
+                            <div th:each="payment : ${paymentMap[collectedPrescription.prescriptionId]}" style="font-weight: bold; color: green;">
+                                <span th:text="${payment.status}"></span>
+                                <!-- ... display other payment details as needed ... -->
+                            </div>
+                        </td>
+
+
+                    </tr>
+                    </tbody>
+
                 </table>
         </div>
         <div><br></div>
@@ -72,22 +134,51 @@
 </html>
 
 <script th:inline="javascript">
-    function collectButtonClick(prescriptionId) {
-        
-        // Make an AJAX request to update the request status
-        $.ajax({
-            type: 'POST',
-            url: '/patient-prescription/collect',
-            data: { prescriptionId: prescriptionId },
-            success: function(response) {
-                // Handle success, update the UI or perform additional actions
-                alert(response);
-                location.reload(); 
-            },
-            error: function(error) {
-                // Handle error
-                console.error('Error updating request status', error);
-            }
-        });
+<!--    function collectButtonClick(prescriptionId) {-->
+
+<!--        // Make an AJAX request to update the request status-->
+<!--        $.ajax({-->
+<!--            type: 'POST',-->
+<!--            url: '/patient-prescription/collect',-->
+<!--            data: { prescriptionId: prescriptionId },-->
+<!--            success: function(response) {-->
+<!--                // Handle success, update the UI or perform additional actions-->
+<!--                alert(response);-->
+<!--                location.reload();-->
+<!--            },-->
+<!--            error: function(error) {-->
+<!--                // Handle error-->
+<!--                console.error('Error updating request status', error);-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+
+ function openPaymentPopup(prescriptionId) {
+        // AJAX call to the /prescriptions/collect endpoint
+        fetch('/patient-prescription/collect/' + prescriptionId)
+            .then(response => response.json())
+            .then(data => {
+                // Update popup content
+                document.getElementById('medicineCost').textContent = data.medicineCost;
+                document.getElementById('medicineQuantity').textContent = data.medicineQuantity;
+                document.getElementById('totalCost').textContent = data.totalCost;
+
+                // Show the popup
+                document.getElementById('paymentPopup').style.display = 'block';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function payPrescription() {
+        let paymentId = ...; // Retrieve payment ID
+        fetch('/patient-prescription/pay/' + paymentId, { method: 'POST' })
+            .then(response => {
+                if(response.ok) {
+                    alert("Payment successful");
+                    // Hide the popup and refresh the page or update the UI accordingly
+                    document.getElementById('paymentPopup').style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 </script>
