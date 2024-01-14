@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Payment;
 import com.example.demo.entity.Prescription;
+import com.example.demo.repository.PaymentRepository;
 import com.example.demo.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,35 @@ public class PrescriptionService
     {
         this.prescriptionRepository = prescriptionRepository;
     }
+
+    @Autowired
+    private MedicineService medicineService;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    public Payment createPayment(int prescriptionId) {
+        Prescription prescription = prescriptionRepository.findById(prescriptionId).orElseThrow(
+                () -> new RuntimeException("Prescription not found")
+        );
+
+        Float medicineCost = medicineService.getMedicineCostById(prescription.getMedicineId());
+        String medicineName = medicineService.getMedicineNameById(prescription.getMedicineId());
+        Payment payment = new Payment(prescriptionId, medicineCost, prescription.getMedicineQuantity(),
+                prescription.getPrescriptionName(),prescription.getPatientId(),medicineName, prescription.getDoctorName());
+        return paymentRepository.save(payment);
+    }
+
+
+    public void updatePaymentStatus(Integer paymentId, String status) {
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(
+                () -> new RuntimeException("Payment not found")
+        );
+        payment.setStatus(status);
+        paymentRepository.save(payment);
+    }
+
+
 
     public List<Prescription> getAllPrescriptions()
     {

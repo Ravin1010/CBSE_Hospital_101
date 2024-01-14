@@ -70,4 +70,20 @@ public class MedicineService
         }
     }
 
+
+    public float getMedicineCostById(int medicineId) {
+        Medicine medicine = medicineRepository.findById(medicineId).orElseThrow(
+                () -> new RuntimeException("Medicine not found")
+        );
+        return medicine.getMedicineCost();
+    }
+
+    public String getMedicineNameById(int medicineId) {
+        Medicine medicine = medicineRepository.findById(medicineId).orElseThrow(
+                () -> new RuntimeException("Medicine not found")
+        );
+        return medicine.getMedicineName();
+    }
+
+
 }
