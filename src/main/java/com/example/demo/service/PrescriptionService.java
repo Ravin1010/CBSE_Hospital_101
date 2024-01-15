@@ -6,23 +6,23 @@ import com.example.demo.repository.PaymentRepository;
 import com.example.demo.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.demo.service.DoctorService;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PrescriptionService
-{
+public class PrescriptionService {
     private PrescriptionRepository prescriptionRepository;
+    private DoctorService doctorService;
 
-    public PrescriptionService()
-    {
+    public PrescriptionService() {
     }
 
     @Autowired
-    public PrescriptionService(PrescriptionRepository prescriptionRepository)
-    {
+    public PrescriptionService(PrescriptionRepository prescriptionRepository, DoctorService doctorService) {
         this.prescriptionRepository = prescriptionRepository;
+        this.doctorService = doctorService;
     }
 
     @Autowired
@@ -33,42 +33,41 @@ public class PrescriptionService
 
     public Payment createPayment(int prescriptionId) {
         Prescription prescription = prescriptionRepository.findById(prescriptionId).orElseThrow(
-                () -> new RuntimeException("Prescription not found")
-        );
+                () -> new RuntimeException("Prescription not found"));
 
         Float medicineCost = medicineService.getMedicineCostById(prescription.getMedicineId());
         String medicineName = medicineService.getMedicineNameById(prescription.getMedicineId());
         Payment payment = new Payment(prescriptionId, medicineCost, prescription.getMedicineQuantity(),
-                prescription.getPrescriptionName(),prescription.getPatientId(),medicineName, prescription.getDoctorName());
+                prescription.getPrescriptionName(), prescription.getPatientId(), medicineName,
+                getDoctorName(prescription));
         return paymentRepository.save(payment);
     }
 
+    public String getDoctorName(Prescription prescription) {
+        int doctorId = prescription.getDoctorId();
+        String doctorName = doctorService.findById(doctorId).getName();
+        return doctorName;
+    }
 
     public void updatePaymentStatus(Integer paymentId, String status) {
         Payment payment = paymentRepository.findById(paymentId).orElseThrow(
-                () -> new RuntimeException("Payment not found")
-        );
+                () -> new RuntimeException("Payment not found"));
         payment.setStatus(status);
         paymentRepository.save(payment);
     }
 
-
-
-    public List<Prescription> getAllPrescriptions()
-    {
+    public List<Prescription> getAllPrescriptions() {
         List<Prescription> prescriptionList = prescriptionRepository.findAll();
         return prescriptionList;
     }
 
-    public List<Prescription> getNewPrescriptions()
-    {
+    public List<Prescription> getNewPrescriptions() {
         String prescriptionStatus = "New";
         List<Prescription> newPrescriptionList = prescriptionRepository.findByPrescriptionStatus(prescriptionStatus);
         return newPrescriptionList;
     }
 
-    public List<Prescription> getOldPrescriptions()
-    {
+    public List<Prescription> getOldPrescriptions() {
         String prescriptionStatus = "New";
         List<Prescription> prescriptionList = prescriptionRepository.findAll();
         List<Prescription> newPrescriptionList = prescriptionRepository.findByPrescriptionStatus(prescriptionStatus);
@@ -76,44 +75,42 @@ public class PrescriptionService
         return prescriptionList;
     }
 
-    public List<Prescription> getNewPrescriptionsById(int patientId)
-    {
+    public List<Prescription> getNewPrescriptionsById(int patientId) {
         String prescriptionStatus = "Accepted";
-        List<Prescription> acceptedPrescriptionList = prescriptionRepository.findByPatientIdAndPrescriptionStatus(patientId, prescriptionStatus);
+        List<Prescription> acceptedPrescriptionList = prescriptionRepository
+                .findByPatientIdAndPrescriptionStatus(patientId, prescriptionStatus);
         return acceptedPrescriptionList;
     }
 
-    public List<Prescription> getOldPrescriptionsById(int patientId)
-    {
+    public List<Prescription> getOldPrescriptionsById(int patientId) {
         String prescriptionStatus = "Collected";
-        List<Prescription> collectedPrescriptionList = prescriptionRepository.findByPatientIdAndPrescriptionStatus(patientId, prescriptionStatus);
+        List<Prescription> collectedPrescriptionList = prescriptionRepository
+                .findByPatientIdAndPrescriptionStatus(patientId, prescriptionStatus);
         return collectedPrescriptionList;
     }
 
-    public void save(Prescription prescription)
-    {
+    public void save(Prescription prescription) {
         prescriptionRepository.save(prescription);
     }
 
-    public Prescription findById(int id)
-    {
-        Prescription newPrescription =null;
+    public void deletePrescription(Prescription prescription) {
+        prescriptionRepository.delete(prescription);
+    }
+
+    public Prescription findById(int id) {
+        Prescription newPrescription = null;
         Optional<Prescription> prescription = prescriptionRepository.findById(id);
-        if(prescription.isPresent())
-        {
+        if (prescription.isPresent()) {
             newPrescription = prescription.get();
         }
         return newPrescription;
     }
 
-
-    public void acceptById(int id)
-    {
-        //Get Prescription
-        Prescription newPrescription =null;
+    public void acceptById(int id) {
+        // Get Prescription
+        Prescription newPrescription = null;
         Optional<Prescription> prescription = prescriptionRepository.findById(id);
-        if(prescription.isPresent())
-        {
+        if (prescription.isPresent()) {
             newPrescription = prescription.get();
         }
 
@@ -121,13 +118,11 @@ public class PrescriptionService
         prescriptionRepository.save(newPrescription);
     }
 
-    public void rejectById(int id)
-    {
-        //Get Prescription
-        Prescription newPrescription =null;
+    public void rejectById(int id) {
+        // Get Prescription
+        Prescription newPrescription = null;
         Optional<Prescription> prescription = prescriptionRepository.findById(id);
-        if(prescription.isPresent())
-        {
+        if (prescription.isPresent()) {
             newPrescription = prescription.get();
         }
 
@@ -135,13 +130,11 @@ public class PrescriptionService
         prescriptionRepository.save(newPrescription);
     }
 
-    public void collectById(int id)
-    {
-        //Get Prescription
-        Prescription newPrescription =null;
+    public void collectById(int id) {
+        // Get Prescription
+        Prescription newPrescription = null;
         Optional<Prescription> prescription = prescriptionRepository.findById(id);
-        if(prescription.isPresent())
-        {
+        if (prescription.isPresent()) {
             newPrescription = prescription.get();
         }
 

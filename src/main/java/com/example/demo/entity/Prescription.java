@@ -1,4 +1,5 @@
 package com.example.demo.entity;
+
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -18,14 +19,14 @@ public class Prescription {
     @Column(name = "patient_id")
     private int patientId;
 
-    @Column(name = "doctor_name")
-    private String doctorName;
+    @Column(name = "doctor_id")
+    private int doctorId;
 
-    @Column(name = "disease_name")
-    private String diseaseName;
+    @Column(name = "disease_id")
+    private int diseaseId;
 
-    @Column(name = "tp_name")
-    private String tpName;
+    @Column(name = "tp_id")
+    private int tpId;
 
     @Column(name = "medicineId")
     private int medicineId;
@@ -42,15 +43,14 @@ public class Prescription {
     public Prescription() {
     }
 
-    public Prescription(int prescriptionId, String prescriptionName, int patientId, String doctorName,
-            String diseaseName, String tpName, int medicineId, int medicineQuantity, String prescriptionStatus,
-            LocalDateTime createdAt) {
+    public Prescription(int prescriptionId, String prescriptionName, int patientId, int doctorId, int diseaseId,
+            int tpId, int medicineId, int medicineQuantity, String prescriptionStatus, LocalDateTime createdAt) {
         this.prescriptionId = prescriptionId;
         this.prescriptionName = prescriptionName;
         this.patientId = patientId;
-        this.doctorName = doctorName;
-        this.diseaseName = diseaseName;
-        this.tpName = tpName;
+        this.doctorId = doctorId;
+        this.diseaseId = diseaseId;
+        this.tpId = tpId;
         this.medicineId = medicineId;
         this.medicineQuantity = medicineQuantity;
         this.prescriptionStatus = prescriptionStatus;
@@ -81,28 +81,28 @@ public class Prescription {
         this.patientId = patientId;
     }
 
-    public String getDoctorName() {
-        return doctorName;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
     }
 
-    public String getDiseaseName() {
-        return diseaseName;
+    public int getDiseaseId() {
+        return diseaseId;
     }
 
-    public void setDiseaseName(String diseaseName) {
-        this.diseaseName = diseaseName;
+    public void setDiseaseId(int diseaseId) {
+        this.diseaseId = diseaseId;
     }
 
-    public String getTpName() {
-        return tpName;
+    public int getTpId() {
+        return tpId;
     }
 
-    public void setTpName(String tpName) {
-        this.tpName = tpName;
+    public void setTpId(int tpId) {
+        this.tpId = tpId;
     }
 
     public int getMedicineId() {
@@ -136,5 +136,5 @@ public class Prescription {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    
+
 }

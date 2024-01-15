@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
         <h1>Manage Prescription</h1>
-        <h3>Create and Manage Medicine Prescriptions</h3>
+        <h4>Create and Manage Medicine Prescriptions</h4>
         <div><br></div>
         <div>
             <a th:href="@{/prescription/add-prescription}" class="btn btn-primary btn-sm mb-3">
@@ -36,7 +36,7 @@
                         <td th:text="${newPrescription.prescriptionId}"></td>
                         <td th:text="${newPrescription.prescriptionName}"></td>
                         <td th:text="${newPrescription.patientId}"></td>
-                        <td th:text="${newPrescription.tpName}"></td>
+                        <td th:text="${newPrescription.tpId}"></td>
                         <td th:text="${newPrescription.medicineId}"></td>
                         <td th:text="${newPrescription.medicineQuantity}"></td>
                         <td>
@@ -84,7 +84,7 @@
                             <td th:text="${oldPrescription.prescriptionId}"></td>
                             <td th:text="${oldPrescription.prescriptionName}"></td>
                             <td th:text="${oldPrescription.patientId}"></td>
-                            <td th:text="${oldPrescription.tpName}"></td>
+                            <td th:text="${oldPrescription.tpId}"></td>
                             <td th:text="${oldPrescription.medicineId}"></td>
                             <td th:text="${oldPrescription.medicineQuantity}"></td>
                             <td th:text="${oldPrescription.prescriptionStatus}"></td>
@@ -93,6 +93,11 @@
                                 <a th:href="@{/prescription/showFormForUpdate(prescriptionId=${oldPrescription.prescriptionId})}"
                                    class="btn btn-info btn-sm">
                                     Update
+                                </a>
+                                <!-- Add "update" button/link -->
+                                <a th:href="@{/prescription/deletePrescription(prescriptionId=${oldPrescription.prescriptionId})}"
+                                   class="btn btn-danger btn-sm">
+                                    Delete
                                 </a>
                             </td>
                         </tr>

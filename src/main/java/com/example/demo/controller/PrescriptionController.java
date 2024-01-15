@@ -17,56 +17,66 @@ import com.example.demo.entity.User;
 import com.example.demo.service.PrescriptionService;
 import com.example.demo.service.UserService;
 import com.example.demo.service.MedicineService;
+import com.example.demo.service.DiseaseService;
+import com.example.demo.service.DoctorService;
+import com.example.demo.service.TreatmentPlanService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/prescription")
-public class PrescriptionController
-{
+public class PrescriptionController {
 
     // load employee data
     private PrescriptionService prescriptionService;
     private UserService userService;
+    private DoctorService doctorService;
     private MedicineService medicineService;
+    private DiseaseService diseaseService;
+    private TreatmentPlanService treatmentPlanService;
     private List<Prescription> thePrescriptions;
-    @Autowired
 
-    public PrescriptionController(PrescriptionService prescriptionService,UserService userService, MedicineService medicineService)
-    {
+    @Autowired
+    public PrescriptionController(PrescriptionService prescriptionService, UserService userService,
+            DoctorService doctorService,
+            MedicineService medicineService, DiseaseService diseaseService, TreatmentPlanService treatmentPlanService) {
         this.prescriptionService = prescriptionService;
         this.userService = userService;
+        this.doctorService = doctorService;
         this.medicineService = medicineService;
+        this.diseaseService = diseaseService;
+        this.treatmentPlanService = treatmentPlanService;
     }
 
     @GetMapping("/list")
-    public String listMedicine(Model theModel)
-    {
+    public String listMedicine(Model theModel) {
         thePrescriptions = prescriptionService.getAllPrescriptions();
         theModel.addAttribute("prescriptions", thePrescriptions);
         return "prescription/manage_prescription";
     }
 
     @GetMapping("/add-prescription")
-    public String getPrescriptionForm(Model model, HttpSession session)
-    {
+    public String getPrescriptionForm(Model model, HttpSession session) {
         // Retrieve user details from the session
         User user = (User) session.getAttribute("user");
 
         // Pass user information to the model
         model.addAttribute("user", user);
         model.addAttribute("patientList", userService.getAllPatients());
+        model.addAttribute("doctorList", doctorService.getAllDoctors());
         model.addAttribute("medicineList", medicineService.getAllMedicines());
-        //Create Empty Prescription
+        model.addAttribute("diseaseList", diseaseService.getAllDiseases());
+        model.addAttribute("tpList", treatmentPlanService.listAll());
+        // Create Empty Prescription
         Prescription prescription = new Prescription();
-        model.addAttribute("prescription",prescription);
+        model.addAttribute("prescription", prescription);
         return "prescription/add_prescription";
     }
 
     @PostMapping("/save")
-    public String savePrescription(@ModelAttribute("prescription") Prescription thePrescription, Model model,HttpSession session)
-    {
-        //Save Prescription
+    public String savePrescription(@ModelAttribute("prescription") Prescription thePrescription, Model model,
+            HttpSession session) {
+        // Save Prescription
         prescriptionService.save(thePrescription);
 
         // Retrieve user details from the session
@@ -78,19 +88,20 @@ public class PrescriptionController
     }
 
     @GetMapping("/showFormForUpdate")
-    public String showUpdateForm(@RequestParam("prescriptionId") int theID,Model model)
-    {
+    public String showUpdateForm(@RequestParam("prescriptionId") int theID, Model model) {
         Prescription prescription = prescriptionService.findById(theID);
-        model.addAttribute("prescription",prescription);
+        model.addAttribute("prescription", prescription);
         model.addAttribute("patientList", userService.getAllPatients());
+        model.addAttribute("doctorList", doctorService.getAllDoctors());
         model.addAttribute("medicineList", medicineService.getAllMedicines());
+        model.addAttribute("diseaseList", diseaseService.getAllDiseases());
+        model.addAttribute("tpList", treatmentPlanService.listAll());
         return "prescription/add_prescription";
     }
 
     @GetMapping("/accept")
-    public String acceptPrescription(@RequestParam("prescriptionId") int theID, Model model, HttpSession session)
-    {
-         // Retrieve user details from the session
+    public String acceptPrescription(@RequestParam("prescriptionId") int theID, Model model, HttpSession session) {
+        // Retrieve user details from the session
         User user = (User) session.getAttribute("user");
 
         // Pass user information to the model
@@ -100,9 +111,8 @@ public class PrescriptionController
     }
 
     @GetMapping("/reject")
-    public String rejectPrescription(@RequestParam("prescriptionId") int theID, Model model, HttpSession session)
-    {
-         // Retrieve user details from the session
+    public String rejectPrescription(@RequestParam("prescriptionId") int theID, Model model, HttpSession session) {
+        // Retrieve user details from the session
         User user = (User) session.getAttribute("user");
 
         // Pass user information to the model
@@ -124,14 +134,18 @@ public class PrescriptionController
         return "/prescription/manage_prescription";
     }
 
+    @GetMapping("/deletePrescription")
+    public String deletePrescription(@ModelAttribute("prescription") Prescription thePrescription, Model model,
+            HttpSession session) {
+        // Save Prescription
+        prescriptionService.deletePrescription(thePrescription);
+
+        // Retrieve user details from the session
+        User user = (User) session.getAttribute("user");
+
+        // Pass user information to the model
+        model.addAttribute("user", user);
+        return "redirect:manage-prescription";
+    }
+
 }
-
-
-
-
-
-
-
-
-
-

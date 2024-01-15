@@ -30,7 +30,7 @@
                     <!-- Iterate over patientDiseases list -->
                     <tr th:each="acceptedPrescription : ${acceptedPrescriptionList}">
                         <td th:text="${acceptedPrescription.prescriptionName}"></td>
-                        <td th:text="${acceptedPrescription.tpName}"></td>
+                        <td th:text="${acceptedPrescription.tpId}"></td>
                         <td th:text="${acceptedPrescription.medicineId}"></td>
                         <td th:text="${acceptedPrescription.medicineQuantity}"></td>
                         <td>
@@ -82,7 +82,7 @@
 <!--                        &lt;!&ndash; Iterate over patientDiseases list &ndash;&gt;-->
 <!--                        <tr th:each="collectedPrescription : ${collectedPrescriptionList}">-->
 <!--                            <td th:text="${collectedPrescription.prescriptionName}"></td>-->
-<!--                            <td th:text="${collectedPrescription.tpName}"></td>-->
+<!--                            <td th:text="${collectedPrescription.tpId}"></td>-->
 <!--                            <td th:text="${collectedPrescription.medicineId}"></td>-->
 <!--                            <td th:text="${collectedPrescription.medicineQuantity}"></td>-->
 <!--                        </tr>-->
@@ -91,7 +91,7 @@
                     <!-- Iterate over patientDiseases list -->
                     <tr th:each="collectedPrescription : ${collectedPrescriptionList}">
                         <td th:text="${collectedPrescription.prescriptionName}"></td>
-                        <td th:text="${collectedPrescription.tpName}"></td>
+                        <td th:text="${collectedPrescription.tpId}"></td>
                         <td th:text="${collectedPrescription.medicineId}"></td>
                         <td th:text="${collectedPrescription.medicineQuantity}"></td>
                         <td>
@@ -134,24 +134,6 @@
 </html>
 
 <script th:inline="javascript">
-<!--    function collectButtonClick(prescriptionId) {-->
-
-<!--        // Make an AJAX request to update the request status-->
-<!--        $.ajax({-->
-<!--            type: 'POST',-->
-<!--            url: '/patient-prescription/collect',-->
-<!--            data: { prescriptionId: prescriptionId },-->
-<!--            success: function(response) {-->
-<!--                // Handle success, update the UI or perform additional actions-->
-<!--                alert(response);-->
-<!--                location.reload();-->
-<!--            },-->
-<!--            error: function(error) {-->
-<!--                // Handle error-->
-<!--                console.error('Error updating request status', error);-->
-<!--            }-->
-<!--        });-->
-<!--    }-->
 
  function openPaymentPopup(prescriptionId) {
         // AJAX call to the /prescriptions/collect endpoint
@@ -170,7 +152,6 @@
     }
 
     function payPrescription() {
-        let paymentId = ...; // Retrieve payment ID
         fetch('/patient-prescription/pay/' + paymentId, { method: 'POST' })
             .then(response => {
                 if(response.ok) {
