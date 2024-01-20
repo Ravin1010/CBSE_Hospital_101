@@ -24,21 +24,18 @@
     
                     <!-- Add hidden form field to handle update -->
                     <input type="hidden" th:field="*{id}" />
-    
+                    <h6>Medicine Name</h6>
                     <input type="text" th:field="*{name}"
                            class="form-control mb-4 col-10" placeholder="Name" required>
-    
+                    <h6>Medicine Details</h6>
                     <input type="text" th:field="*{details}"
                            class="form-control mb-4 col-10" placeholder="Details" required>
-    
+                    <h6>Medicine Cost</h6>
                     <input type="number" th:field="*{cost}"
                            class="form-control mb-4 col-10" placeholder="Cost" step="0.01" required>
-    
+                    <h6>Medicine Stock Amount</h6>
                     <input type="number" th:field="*{stock}"
                            class="form-control mb-4 col-10" placeholder="Amount" required>
-    
-    
-                    </select>
     
                     <!--<select
                             class="form-control mb-4 col-4" placeholder="Select Doctor">
