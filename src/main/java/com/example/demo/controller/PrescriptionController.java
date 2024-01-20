@@ -1,16 +1,7 @@
 package com.example.demo.controller;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MimeTypeUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.Prescription;
 import com.example.demo.entity.User;
@@ -26,19 +17,20 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/prescription")
 public class PrescriptionController {
-
-    // load employee data
-    private PrescriptionService prescriptionService;
-    private UserService userService;
-    private DoctorService doctorService;
-    private MedicineService medicineService;
-    private DiseaseService diseaseService;
-    private TreatmentPlanService treatmentPlanService;
-    private List<Prescription> thePrescriptions;
-
     @Autowired
-    public PrescriptionController(PrescriptionService prescriptionService, UserService userService,
-            DoctorService doctorService,
+    private PrescriptionService prescriptionService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private DoctorService doctorService;
+    @Autowired
+    private MedicineService medicineService;
+    @Autowired
+    private DiseaseService diseaseService;
+    @Autowired
+    private TreatmentPlanService treatmentPlanService;
+
+    public PrescriptionController(PrescriptionService prescriptionService, UserService userService, DoctorService doctorService,
             MedicineService medicineService, DiseaseService diseaseService, TreatmentPlanService treatmentPlanService) {
         this.prescriptionService = prescriptionService;
         this.userService = userService;
@@ -48,19 +40,12 @@ public class PrescriptionController {
         this.treatmentPlanService = treatmentPlanService;
     }
 
-    @GetMapping("/list")
-    public String listMedicine(Model theModel) {
-        thePrescriptions = prescriptionService.getAllPrescriptions();
-        theModel.addAttribute("prescriptions", thePrescriptions);
-        return "prescription/manage_prescription";
-    }
-
     @GetMapping("/add-prescription")
     public String getPrescriptionForm(Model model, HttpSession session) {
         // Retrieve user details from the session
         User user = (User) session.getAttribute("user");
 
-        // Pass user information to the model
+        // Pass information to the model
         model.addAttribute("user", user);
         model.addAttribute("patientList", userService.getAllPatients());
         model.addAttribute("doctorList", doctorService.getAllDoctors());
@@ -99,7 +84,7 @@ public class PrescriptionController {
         return "prescription/add_prescription";
     }
 
-    @GetMapping("/accept")
+    @PostMapping("/accept")
     public String acceptPrescription(@RequestParam("prescriptionId") int theID, Model model, HttpSession session) {
         // Retrieve user details from the session
         User user = (User) session.getAttribute("user");
@@ -110,7 +95,7 @@ public class PrescriptionController {
         return "redirect:manage-prescription";
     }
 
-    @GetMapping("/reject")
+    @PostMapping("/reject")
     public String rejectPrescription(@RequestParam("prescriptionId") int theID, Model model, HttpSession session) {
         // Retrieve user details from the session
         User user = (User) session.getAttribute("user");
@@ -134,7 +119,7 @@ public class PrescriptionController {
         return "/prescription/manage_prescription";
     }
 
-    @GetMapping("/deletePrescription")
+    @PostMapping("/deletePrescription")
     public String deletePrescription(@ModelAttribute("prescription") Prescription thePrescription, Model model,
             HttpSession session) {
         // Save Prescription
@@ -147,5 +132,4 @@ public class PrescriptionController {
         model.addAttribute("user", user);
         return "redirect:manage-prescription";
     }
-
 }

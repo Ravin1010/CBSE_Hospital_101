@@ -1,44 +1,22 @@
 package com.example.demo.controller;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MimeTypeUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.Medicine;
 import com.example.demo.entity.User;
 import com.example.demo.service.MedicineService;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/pharmacy")
-public class MedicineController
-{
-
-    // load employee data
-    private MedicineService medicineService;
-    private List<Medicine> theMedicines;
+public class MedicineController{
     @Autowired
+    private MedicineService medicineService;
 
     public MedicineController(MedicineService medicineService)
     {
         this.medicineService = medicineService;
-    }
-
-    @GetMapping("/list")
-    public String listMedicine(Model theModel)
-    {
-        theMedicines = medicineService.getAllMedicines();
-        theModel.addAttribute("medicines", theMedicines);
-        return "pharmacy/manage_pharmacy";
     }
 
     @GetMapping("/add-medicine")
@@ -79,7 +57,7 @@ public class MedicineController
         return "pharmacy/add_medicine";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String deleteMedicine(@RequestParam("id") int theID, Model model, HttpSession session)
     {
          // Retrieve user details from the session

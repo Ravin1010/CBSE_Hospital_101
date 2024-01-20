@@ -75,14 +75,14 @@ public class PrescriptionService {
         return prescriptionList;
     }
 
-    public List<Prescription> getNewPrescriptionsById(int patientId) {
+    public List<Prescription> getAcceptedPrescriptionsById(int patientId) {
         String prescriptionStatus = "Accepted";
         List<Prescription> acceptedPrescriptionList = prescriptionRepository
                 .findByPatientIdAndPrescriptionStatus(patientId, prescriptionStatus);
         return acceptedPrescriptionList;
     }
 
-    public List<Prescription> getOldPrescriptionsById(int patientId) {
+    public List<Prescription> getCollectedPrescriptionsById(int patientId) {
         String prescriptionStatus = "Collected";
         List<Prescription> collectedPrescriptionList = prescriptionRepository
                 .findByPatientIdAndPrescriptionStatus(patientId, prescriptionStatus);
