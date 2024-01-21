@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +16,11 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/prescription")
 public class PrescriptionController {
-    @Autowired
     private PrescriptionService prescriptionService;
-    @Autowired
     private UserService userService;
-    @Autowired
     private DoctorService doctorService;
-    @Autowired
     private MedicineService medicineService;
-    @Autowired
     private DiseaseService diseaseService;
-    @Autowired
     private TreatmentPlanService treatmentPlanService;
 
     public PrescriptionController(PrescriptionService prescriptionService, UserService userService, DoctorService doctorService,
